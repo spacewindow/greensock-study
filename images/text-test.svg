@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188.19 139.87">
+
+    <style type="text/css" >
+    <![CDATA[
+
+    text{
+
+        @font-face {
+          font-family: 'Lobster';
+          src: url('../fonts/lobster.eot');
+          src: url('../fonts/lobster.eot?#iefix') format('embedded-opentype'), url('../fonts/lobster.ttf') format('truetype'), url('../fonts/lobster.woff') format('woff'), url('../fonts/lobster.svg#lobster') format('svg');
+          font-weight: 400;
+          font-style: normal;
+        }
+
+    }
+
+    ]]>
+ </style>
+
+    <text transform="translate(0 48.9)" font-size="55.89" font-family="Lobster">Hi there!</text>
+
+    <text transform="translate(0 125.89)" font-size="55.89" font-family="Lobster">Love ya.</text>
+</svg>

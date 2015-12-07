@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>GSAP animation</title>
+		<style type="text/css">
+
+            *{
+                box-sizing: border-box;
+            }
+
+            html, body{
+                width: 100%;
+                height: 100%;
+            }
+
+            #body{
+                width: 30%;
+                height: 30%;
+                position: relative;
+                overflow: visible;
+                background: red;
+                left: 20%;
+                top: 50%;
+                transform: scaleX(-1);
+            }
+            #wing{
+                position: absolute;
+                top:0;
+                left: 50%;
+                background: blue;
+                width: 50%;
+                height: 150%;
+                left: 25%;
+            }
+
+            #head{
+                position: relative;
+                top: 30%;
+                left: -40%;
+                transform-origin: 100% 0;
+                transform: rotate(50deg);
+                background: green;
+                width: 40%;
+                height: 70%;
+            }
+
+
+		</style>
+	</head>
+	<body>
+
+	    <div id="body">
+	        <div id="wing"></div>
+	        <div id="head"></div>
+	   </div>
+
+<!--
+	    <div class="mg">midground</div>
+
+	    <div class="fg">foreground</div>
+-->
+
+		<script src="TweenMax.min.js"></script>
+		<script>
+            (function(){
+
+                var bird = new TimelineMax({
+                    repeat: -1,
+//                    yoyo: true
+                });
+
+                var bits = new TimelineMax();
+
+                var birdBod = "#body";
+
+                bird.to(birdBod, 1, {left: "50%"})
+                .to(birdBod, 1, {scaleX: -1})
+                .to(birdBod, 1, {left: "20%"})
+                .to(birdBod, 1, {scaleX: 1})
+                ;
+
+
+                bits.to("#wing", 1, {ease: Power2.easeOut, scaleY: -1, transformOrigin: "center top", repeat:-1, yoyo:true}, 'start')
+                .to("#head", 1, {ease: Power2.easeOut, rotation: 90, repeat:-1, yoyo:true}, 'start');
+
+            }());
+        </script>
+
+	</body>
+</html>

@@ -1,0 +1,20 @@
+{
+    "sass.enabled": false,
+    "path": {
+        "scss/styles.scss": {
+            "sass.enabled": false,
+            "sass.options": {
+                "outputDir": "../css/",
+                "includePaths": [
+                    "./scss/"
+                ],
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": false,
+            "brackets-git.gitPath": "git",
+            "mikaeljorhult.bracketsTodo.enabled": false
+        }
+    }
+}
