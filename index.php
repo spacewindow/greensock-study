@@ -80,9 +80,9 @@ var clouds = function(cloud, numClouds){
     for (var i=0; i < numClouds+1; i++){
         var thisCloud = select(cloud + i);
         tl
-        .set(thisCloud, {x:randMinMax(200, 300), y:randMinMax(0, 100),  opacity: 0})
-        .to(thisCloud, 1, {y:randMinMax(-150, -200), x:randMinMax(-200, 100), opacity: randMinMax(0.3, 1), repeat:5, yoyo: true}, 'startDust')
-//        .to(thisCloud, 1, {opacity: 1, repeat:1, yoyo: true}, 'startDust');
+        .to(thisCloud, 0.1 ,{x:randMinMax(-200, 200), y:randMinMax(0, 100),  opacity: 0.2})
+        .to(thisCloud, 1, {y:randMinMax(-150, -200), x:randMinMax(-200, 100), repeat:5, yoyo: true}, 'startDust')
+        .to(thisCloud, 1, {opacity: 1, repeat:5, yoyo: true}, 'startDust');
     }
 }
 
