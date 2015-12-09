@@ -25,7 +25,7 @@
 
 //CSSPlugin.useSVGTransformAttr = true;
 
-var mainTimeline = new TimelineMax({repeat: -1});
+var mainTimeline = new TimelineMax();
 
 // RANDOM NUMBER MIN MAX - https://gist.github.com/timohausmann/4997906
 
@@ -43,6 +43,18 @@ var selectAll = function(s) {
     return document.querySelectorAll(s);
 };
 
+var duplicate = function(e, eNumber) {
+    var element = select(e);
+//    var className = element.getAttribute('class');
+    for (var i=0; i < eNumber; i++){
+        var newElement = element.cloneNode(true);
+//        var newClass = className + (i+1);
+//            newElement.setAttribute('class', className + ' ' + newClass);
+            element.parentNode.insertBefore(newElement, element.nextSibling);
+    };
+//    element.setAttribute('class', className + ' ' + className + '0');
+};
+
 var hey = select('.hey'),
 you = select('.you'),
 overhere = select('.overhere'),
@@ -57,7 +69,7 @@ thanks = select('.thanks'),
 glint = select('.glint');
 
 
-mainTimeline.set([hey, you, overhere, underline, thanks, glint, lights, youmadeit], {
+mainTimeline.set([hey, you, board, overhere, underline, thanks, glint, lights, youmadeit], {
     display: 'none'
 });
 
@@ -73,80 +85,58 @@ mainTimeline.set([hey, you, overhere, underline, thanks, glint, lights, youmadei
 //
 //    });
 
+    var numClouds = 5;
+    var cloud = select('.dust');
 
-
+    function timelineDone(){
+        mainTimeline.add('squareDown', "-=0.3");
+    }
 
     mainTimeline.set([squareleft, squareright], {
         transformOrigin: '0% 100%',
         scaleY: 1,
     })
-    .set(youmadeit, {
-        fill: 'red',
-        x: 25,
-        y: 25,
-        xPercent: 50,
-        yPercent: 50,
-        transformOrigin: '50% 50%'
-    })
+    .to(squareleft, 2, {
+        skewX: -12,
+        ease: Power4.easeIn
+    }, 'squarefall')
+    .to(squareright, 2, {
+        skewX: 12,
+        ease: Power4.easeIn
+    }, 'squarefall')
+    .to([squareright, squareleft], 2, {
+        scaleY: 0,
+        ease: Power4.easeIn,
+        onComplete:timelineDone,
+    }, 'squarefall')
 
-    function makeClouds(){
 
+    for(var i = 0; i < numClouds; i++){
+        var newCloud = cloud.cloneNode(true);
+        cloud.parentNode.insertBefore(newCloud, cloud.nextSibling);
 
+        var tl = new TimelineMax();
 
-        for(var i = 0; i < dust.length; i++){
-            var dustcloud = dust[i];
-            var tl = new TimelineMax({repeat:-1});
-            tl.set(dustcloud, {
-              x:randMinMax(-100, 50),
-            })
-            .to(dustcloud, 1 , {
-              x:randMinMax(10,200),
-                opacity: 0
-            })
-            .to(dustcloud, 1 , {
-                opacity: 1,
-              x:0
-            })
+        tl.set(newCloud, {
+            x: randMinMax(-100, 100),
+            y: 200,
+            opacity: 0,
+            scale: randMinMax(0.3, 1)
+        })
+        .to(newCloud, randMinMax(1,2), {
+            scale: 1.2,
+            y: -100
+        })
+        .to(newCloud, 1, {
+            scale: randMinMax(0.3, 1),
+            opacity: 1,
+            repeat: 1,
+            yoyo: true
+        }, '-=1.5')
 
-            mainTimeline.add(tl, i/3)
-          }
+        mainTimeline.add(tl, 'squareDown')
     }
-
-    makeClouds()
-
-;
-
-
-
-
-
-
-//    makeClouds();
-
-
-//    mainTimeline.to(squareleft, 2, {
-//        skewX: -12,
-//        ease: Power4.easeIn
-//    }, 'squarefall')
-//    .to(squareright, 2, {
-//        skewX: 12,
-//        ease: Power4.easeIn
-//    }, 'squarefall')
-//    .to([squareright, squareleft], 2, {
-//        scaleY: 0,
-//        ease: Power4.easeIn
-//    }, 'squarefall')
-//    .to(dust, 2, {
-//        opacity: 1,
-//        yoyo: true,
-//        repeat: 1,
-//        ease: Power0.easeIn
-//    }, 'dustup')
-//    .to(dust, 4, {
-//        y: -200,
-//        ease: Power0.easeIn
-//    }, 'dustup')
-//    ;
+    select('.elements').removeChild(cloud);
 
 
         </script>
