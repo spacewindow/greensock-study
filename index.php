@@ -57,7 +57,7 @@ thanks = select('.thanks'),
 glint = select('.glint');
 
 
-mainTimeline.set([you, overhere, underline, thanks, glint, lights, youmadeit], {
+mainTimeline.set([hey, you, overhere, underline, thanks, glint, lights, youmadeit], {
     display: 'none'
 });
 
@@ -74,6 +74,8 @@ mainTimeline.set([you, overhere, underline, thanks, glint, lights, youmadeit], {
 //    });
 
 
+
+
     mainTimeline.set([squareleft, squareright], {
         transformOrigin: '0% 100%',
         scaleY: 1,
@@ -86,31 +88,33 @@ mainTimeline.set([you, overhere, underline, thanks, glint, lights, youmadeit], {
         yPercent: 50,
         transformOrigin: '50% 50%'
     })
-    .to(dust, 1, {
-        opacity: 0,
-        y: -200,
-        yoyo: true,
-        repeat: -1,
-        ease: Power0.easeIn
-    }, 0);
 
-    function shakeBoard(){
-        newLoop = new TweenMax.to(board, 1,{
-            repeat: -1,
-            opacity: 0,
-            yoyo: true,
-        });
+    function makeClouds(){
 
-        mainTimeline.add(newLoop, 3);
+
+
+        for(var i = 0; i < dust.length; i++){
+            var dustcloud = dust[i];
+            var tl = new TimelineMax({repeat:-1});
+            tl.set(dustcloud, {
+              x:randMinMax(-100, 50),
+            })
+            .to(dustcloud, 1 , {
+              x:randMinMax(10,200),
+                opacity: 0
+            })
+            .to(dustcloud, 1 , {
+                opacity: 1,
+              x:0
+            })
+
+            mainTimeline.add(tl, i/3)
+          }
     }
 
-    shakeBoard();
+    makeClouds()
 
-    squareleft.onclick = function(){
-        console.log('square clicked');
-        newLoop.paused(!newLoop.paused());
-//        pauseBtn.innerHTML = tl.paused() ? "play" : "pause";
-    };
+;
 
 
 
