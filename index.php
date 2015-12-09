@@ -25,7 +25,7 @@
 
 //CSSPlugin.useSVGTransformAttr = true;
 
-var tl = new TimelineMax();
+var mainTimeline = new TimelineMax({repeat: -1});
 
 // RANDOM NUMBER MIN MAX - https://gist.github.com/timohausmann/4997906
 
@@ -43,24 +43,11 @@ var selectAll = function(s) {
     return document.querySelectorAll(s);
 };
 
-// DUPLICATE ELEMENT
-
-var duplicate = function(e, eNumber) {
-    var element = select(e);
-    var className = element.getAttribute('class');
-    for (var i=0; i < eNumber; i++){
-        var newElement = element.cloneNode(true);
-        var newClass = className + (i+1);
-            newElement.setAttribute('class', className + ' ' + newClass);
-            element.parentNode.insertBefore(newElement, element.nextSibling);
-    };
-    element.setAttribute('class', className + ' ' + className + '0');
-};
-
 var hey = select('.hey'),
 you = select('.you'),
 overhere = select('.overhere'),
 board = select('.board'),
+dust = selectAll('.dust'),
 squareleft = select('.squareleft'),
 squareright= select('.squareright'),
 youmadeit = select('.youmadeit'),
@@ -70,43 +57,70 @@ thanks = select('.thanks'),
 glint = select('.glint');
 
 
-tl.set([hey, you, overhere, board, underline, thanks, glint, lights, youmadeit], {
+mainTimeline.set([you, overhere, underline, thanks, glint, lights, youmadeit], {
     display: 'none'
 });
 
 
-var clouds = function(cloud, numClouds){
-    duplicate(cloud, numClouds);
-    for (var i=0; i < numClouds+1; i++){
-        var thisCloud = select(cloud + i);
-        tl
-        .to(thisCloud, 0.1 ,{x:randMinMax(-200, 200), y:randMinMax(0, 100),  opacity: 0.2})
-        .to(thisCloud, 1, {y:randMinMax(-150, -200), x:randMinMax(-200, 100), repeat:5, yoyo: true}, 'startDust')
-        .to(thisCloud, 1, {opacity: 1, repeat:5, yoyo: true}, 'startDust');
-    }
-}
-
-clouds('.dust', 4);
 
     // SET UP
 
 
-//    tl.set([squareleft, squareright], {
-//        transformOrigin: '0% 100%',
-//        scaleY: 1,
-//    })
-//    .set(dust, {
-//        opacity: 0
-//    })
-//    .set(youmadeit, {
-//        fill: 'red',
-//        x: 25,
-//        y: 25,
-//        xPercent: 50,
-//        yPercent: 50,
-//        transformOrigin: '50% 50%'
-//    })
-//    .to(squareleft, 2, {
+//    var newLoop;
+
+
+//    board.addEventListener("click", function(){
+//
+//    });
+
+
+    mainTimeline.set([squareleft, squareright], {
+        transformOrigin: '0% 100%',
+        scaleY: 1,
+    })
+    .set(youmadeit, {
+        fill: 'red',
+        x: 25,
+        y: 25,
+        xPercent: 50,
+        yPercent: 50,
+        transformOrigin: '50% 50%'
+    })
+    .to(dust, 1, {
+        opacity: 0,
+        y: -200,
+        yoyo: true,
+        repeat: -1,
+        ease: Power0.easeIn
+    }, 0);
+
+    function shakeBoard(){
+        newLoop = new TweenMax.to(board, 1,{
+            repeat: -1,
+            opacity: 0,
+            yoyo: true,
+        });
+
+        mainTimeline.add(newLoop, 3);
+    }
+
+    shakeBoard();
+
+    squareleft.onclick = function(){
+        console.log('square clicked');
+        newLoop.paused(!newLoop.paused());
+//        pauseBtn.innerHTML = tl.paused() ? "play" : "pause";
+    };
+
+
+
+
+
+
+//    makeClouds();
+
+
+//    mainTimeline.to(squareleft, 2, {
 //        skewX: -12,
 //        ease: Power4.easeIn
 //    }, 'squarefall')
