@@ -1,6 +1,6 @@
 svg {
   position: absolute;
-  overflow: visible; }
+  overflow: hidden; }
 
 svg * {
   position: absolute; }
