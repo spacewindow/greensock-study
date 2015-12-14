@@ -22,7 +22,7 @@ gulp.task('browsersync', ['sass'], function() {
     });
 
     gulp.watch("scss/*.scss", ['sass']);
-    gulp.watch("**/*.js").on('change', browserSync.reload);
+    gulp.watch("js/*.js").on('change', browserSync.reload);
 //    gulp.watch("**/*.php" ).on('change', browserSync.reload);
     gulp.watch(["images/*.svg", "*.php" ]).on('change', browserSync.reload);
 });

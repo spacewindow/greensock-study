@@ -2,18 +2,12 @@
 
     <link rel="stylesheet" type="text/css" href="/css/banner.css">
 
-    <style>
-
-
-
-</style>
-
 	</head>
 	<body style="position:relative">
 
-	<?php include('images/banner-assets copy.svg'); ?>
+	<?php include('images/banner.svg'); ?>
 
-
+<!--	<div class="domsquare" style="background: red; position: relative; width: 200px; height: 200px"></div>-->
 
     <script src="js/TweenMax.min.js"></script>
     <script src="js/banner.js"></script>

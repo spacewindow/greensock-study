@@ -1,3 +1,7 @@
+CSSPlugin.useSVGTransformAttr = true;
+
+CSSPlugin.defaultTransformPerspective = 200;
+
 // RANDOM NUMBER MIN MAX - https://gist.github.com/timohausmann/4997906
 
 var randMinMax = function (t, n, a) {
@@ -14,24 +18,16 @@ var selectAll = function (s) {
     return document.querySelectorAll(s);
 };
 
-// DUPLICATE ELEMENT ( + ADD CLASS)
-
-// Returns one single element by duplicating the existing element
-
-var duplicate = function(element) {
-  var newElement = element.cloneNode(true);
-  element.parentNode.insertBefore(newElement, element.nextSibling);
-  return newElement;
-};
-
 var hey = select('.hey'),
     you = select('.you'),
     overhere = select('.overhere'),
     board = select('.board'),
     dust = selectAll('.dust'),
+    square = select('.square'),
     squareleft = select('.squareleft'),
     squareright = select('.squareright'),
     youmadeit = select('.youmadeit'),
+    ymd_words = selectAll('.word'),
     underline = select('.underline'),
     lights = select('.lights'),
     thanks = select('.thanks'),
@@ -45,22 +41,45 @@ var mainTL = new TimelineMax({
     paused: true
 });
 
+// SETUP
+
+// autoAlpha
+
 mainTL
-.set([hey, you, board, dust, overhere, underline, thanks, glint, lights], {
+.set([you, board, dust, overhere, underline, thanks, glint, lights], {
     autoAlpha: 0
 })
-.set(youmadeit, {
+;
 
-});
+// SQUARE UP
 
-// INTRO
+var tlsquareup = new TimelineMax();
 
-var tl1 = new TimelineMax();
-
-tl1
-.set([squareleft, squareright], {
-        transformOrigin: '0% 100%',
+tlsquareup
+.set([square, squareleft, squareright], {
+        transformOrigin: 'center bottom',
+    })
+    .set(square, {
+        scaleY: 0,
+        fill: 'black'
+    })
+    .to(square, 2,{
         scaleY: 1,
+        ease: Power4.easeOut,
+        fill: 'red'
+    }, 'squareUp')
+;
+
+mainTL.add(tlsquareup);
+
+// SQUARE FALL
+
+var tlsquare = new TimelineMax();
+
+tlsquare
+.set([square, squareleft, squareright], {
+//        transformOrigin: 'center bottom',
+//        scaleY: 1,
     })
     .to(squareleft, 2, {
         skewX: -12,
@@ -70,71 +89,108 @@ tl1
         skewX: 12,
         ease: Power4.easeIn
     }, 'squarefall')
-    .to([squareright, squareleft], 2, {
+    .to([square], 2, {
         scaleY: 0,
         ease: Power4.easeIn,
-        onComplete:tl1Done,
+        onComplete:tlsquareDone,
     }, 'squarefall');
 
-function tl1Done(){
+function tlsquareDone(){
     mainTL.add('squareDown', "-=0.3");
 }
 
-mainTL.add(tl1);
+mainTL.add(tlsquare);
 
 // DUST CLOUDS
 
-var makeClouds = function (cloud, numClouds) {
-    var element = document.querySelector(cloud);
-    for (var i = 0; i < numClouds; i++) { duplicate(element); }
-    var clouds = selectAll(cloud);
-
-    for (var i = 0; i < clouds.length; i++) {
-
-        var thisCloud = clouds[i];
-        var tl = new TimelineMax();
-
-        tl
-            .set(thisCloud, {
-                x: randMinMax(0, 200),
-                y: randMinMax(0, 100),
-                scale: randMinMax(0.3, 1),
-                opacity: 0
-            })
-            .to(thisCloud, 4, {
-                x: randMinMax(0, 200),
-                y: randMinMax(0, 100)
-            }, 'startDust')
-            .to(thisCloud, 2, {
-                opacity: 1,
-                repeat: 1,
-                yoyo: true
-            }, 'startDust')
-            .to({}, 2, {});
-
-        mainTL.add(tl, 'squareDown');
-
-    }
-
-    mainTL.add('dustClear');
+// RANDOM NUMBER MIN MAX - https://gist.github.com/timohausmann/4997906
+var randMinMax = function(t, n, a) {
+  var r = t + Math.random() * (n - t)
+  return a && (r = Math.round(r)), r
 }
 
-makeClouds('.dust', 4);
+// Returns one single Cloud by duplicating the existing Cloud element
+var createCloud = function(element) {
+  var newElement = element.cloneNode(true);
+  element.parentNode.insertBefore(newElement, element.nextSibling);
+  return newElement;
+};
+
+// Initial placement of all clouds objects
+var placeClouds = function(clouds) {
+  TweenMax.staggerTo(clouds, 0, {
+    cycle: {
+      x: [-100, 50, 0, 50, 100],
+      y: [200],
+      scale: function() { return randMinMax(0.4, 1); }
+    },
+    opacity: 0
+  }, 0);
+};
+
+// Addition of all cloud elements into main TimelineMax instance
+var addIntoMainTimeline = function(clouds) {
+  mainTL.staggerTo(clouds, 4, {
+    cycle: {
+      x: function() { return randMinMax(-200, 200); },
+      y: function() { return randMinMax(-150, -200); },
+      scale: function() { return randMinMax(0.4, 2); }
+    },
+    bezier: [{ opacity: 0.8 }, { opacity: 0 }],
+    ease: Power1.easeInOut
+  }, 'squareDown');
+};
+
+var clouds = function(cloud, numClouds) {
+  var clouds;
+  var element = document.querySelector(cloud);
+  for (var i = 0; i < numClouds; i++) { createCloud(element); }
+  clouds = document.querySelectorAll(cloud);
+  placeClouds(clouds);
+  addIntoMainTimeline(clouds);
+};
+
+clouds('.dust', 4);
 
 // NEXT PART
-
 
 var tl2 = new TimelineMax();
 
 tl2
+
+    // center text
+
+    .set(youmadeit, {
+        fill: 'red',
+        x: 25,
+        y: 25,
+        xPercent: 50,
+        yPercent: 50,
+        opacity: 0,
+        transformOrigin: '50% 50%'
+    })
+    .set(ymd_words, {
+        transformOrigin: '50% 50%'
+    })
+
+    // animate text
+
     .to(youmadeit, 0.3, {
         autoAlpha: 1,
+        opacity: 1,
         fill: 'red'
-     });
+     })
+    .staggerTo(ymd_words, 0.3, {
+        bezier: [{scale: 2}, {scale: 1.1}]
+    }, 0.2);
 
 
 mainTL.add(tl2, 'dustClear-=0.5');
 
 // PLAY timeline
 
-mainTL.play('dustClear');
+mainTL.play(6);
+mainTL.addCallback(loopIt, 8);
+function loopIt(){
+    mainTL.play(6);
+}
