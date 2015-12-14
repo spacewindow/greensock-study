@@ -10,7 +10,9 @@
 <!--	<div class="domsquare" style="background: red; position: relative; width: 200px; height: 200px"></div>-->
 
     <script src="js/TweenMax.min.js"></script>
+    <script src="js/MorphSVGPlugin.min.js"></script>
     <script src="js/banner.js"></script>
+<!--    <script src="js/test.js"></script>-->
 
 	</body>
 </html>

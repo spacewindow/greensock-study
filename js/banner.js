@@ -24,6 +24,8 @@ var hey = select('.hey'),
     board = select('.board'),
     dust = selectAll('.dust'),
     square = select('.square'),
+    squarefull = select('.squarefull'),
+    squarebulge = select('.squarebulge'),
     squareleft = select('.squareleft'),
     squareright = select('.squareright'),
     youmadeit = select('.youmadeit'),
@@ -43,10 +45,8 @@ var mainTL = new TimelineMax({
 
 // SETUP
 
-// autoAlpha
-
 mainTL
-.set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit], {
+.set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit, squarebulge, squareleft, squareright], {
     autoAlpha: 0
 })
 ;
@@ -73,9 +73,33 @@ tlsquareup
     .to([squareleft, squareright], 2, {
         fill: 'lime'
     }, 'squareUp')
+    .to([squareleft, squareright], 0, {
+        opacity: 0
+    })
 ;
 
 mainTL.add(tlsquareup);
+mainTL.add('squareflex');
+
+var tlsquareflex = new TimelineMax();
+
+tlsquareflex
+    .set(squarebulge, {
+    autoAlpha: 0
+})
+    .set(square, {
+        autoAlpha: 1,
+        fill: 'red'
+    })
+    .to(squarefull, 0.5, {
+        morphSVG: '.squarebulge',
+        repeat: 1,
+        yoyo: true,
+        ease: Power2.easeOut
+    })
+;
+
+mainTL.add(tlsquareflex, 'squareflex');
 
 // SQUARE FALL
 
@@ -194,14 +218,14 @@ mainTL.add(tl2, 'dustClear-=0.5');
 
 // PLAY timeline
 
-//mainTL.play(0);
-//mainTL.addCallback(loopIt, 2);
+mainTL.play(0);
+//mainTL.addCallback(loopIt, 'squareflex+=3');
 //function loopIt(){
-//    mainTL.play(0);
+//    mainTL.play('squareflex');
 //}
 
 //mainTL.pause(3);
 
-mainTL.play(3);
+
 
 

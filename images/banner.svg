@@ -16,9 +16,19 @@
   <title>banner-ad-assets</title>
 
     <g class="square">
+        <path class="squarefull" fill="#00FF00" d="M400,400H0L0.5,0L400,0V400z"/>
         <rect class="squareleft" width="205" height="400"/>
         <rect class="squareright" width="205" height="400" x="200"/>
         <text x="200" y="230" class="hey" font-size="110" font-family="Museo" text-anchor="middle">HEY!</text>
+
+
+<path class="squarebulge" fill="#00FF00" d="M400,400c-26.1-26.1-373.9-26.1-400,0C26.1,373.9,26.1,26.1,0,0
+	c26.1,26.1,373.9,26.1,400,0C373.9,26.1,373.9,373.9,400,400z"/>
+
+
+
+
+
     </g>
     <image class="dust" xlink:href="http://robthwaites.com/codepen/dust-big.png" x="0" y="0" height="400" width="400"/>
 
