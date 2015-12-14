@@ -16,8 +16,8 @@
   <title>banner-ad-assets</title>
 
     <g class="square">
-        <rect class="squareleft" width="205" height="400" fill="lime"/>
-        <rect class="squareright" width="205" height="400" x="200" fill="lime"/>
+        <rect class="squareleft" width="205" height="400"/>
+        <rect class="squareright" width="205" height="400" x="200"/>
         <text x="200" y="230" class="hey" font-size="110" font-family="Museo" text-anchor="middle">HEY!</text>
     </g>
     <image class="dust" xlink:href="http://robthwaites.com/codepen/dust-big.png" x="0" y="0" height="400" width="400"/>

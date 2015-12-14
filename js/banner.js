@@ -46,7 +46,7 @@ var mainTL = new TimelineMax({
 // autoAlpha
 
 mainTL
-.set([you, board, dust, overhere, underline, thanks, glint, lights], {
+.set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit], {
     autoAlpha: 0
 })
 ;
@@ -63,10 +63,15 @@ tlsquareup
         scaleY: 0,
         fill: 'black'
     })
+    .set([squareleft, squareright], {
+        fill: 'black'
+    })
     .to(square, 2,{
         scaleY: 1,
-        ease: Power4.easeOut,
-        fill: 'red'
+        ease: Power4.easeOut
+    }, 'squareUp')
+    .to([squareleft, squareright], 2, {
+        fill: 'lime'
     }, 'squareUp')
 ;
 
@@ -92,12 +97,12 @@ tlsquare
     .to([square], 2, {
         scaleY: 0,
         ease: Power4.easeIn,
-        onComplete:tlsquareDone,
+//        onComplete:tlsquareDone,
     }, 'squarefall');
 
-function tlsquareDone(){
-    mainTL.add('squareDown', "-=0.3");
-}
+//function tlsquareDone(){
+//    mainTL.add('squareDown', "-=1");
+//}
 
 mainTL.add(tlsquare);
 
@@ -138,7 +143,7 @@ var addIntoMainTimeline = function(clouds) {
     },
     bezier: [{ opacity: 0.8 }, { opacity: 0 }],
     ease: Power1.easeInOut
-  }, 'squareDown');
+  }, 0, '-=0.8');
 };
 
 var clouds = function(cloud, numClouds) {
@@ -189,8 +194,14 @@ mainTL.add(tl2, 'dustClear-=0.5');
 
 // PLAY timeline
 
-mainTL.play(6);
-mainTL.addCallback(loopIt, 8);
-function loopIt(){
-    mainTL.play(6);
-}
+//mainTL.play(0);
+//mainTL.addCallback(loopIt, 2);
+//function loopIt(){
+//    mainTL.play(0);
+//}
+
+//mainTL.pause(3);
+
+mainTL.play(3);
+
+
