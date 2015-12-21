@@ -45,7 +45,7 @@ var
     blKnot = selectAll('.blKnot'),
     blBody = select('.blBody'),
     bl = selectAll('.bl'),
-    string1 = selectAll('.string'),
+//    string1 = selectAll('.string'),
     balloonCam = select('.balloonCam'),
     grain = select('.grain'),
     blwrap = selectAll('.balloonWrapper'),
@@ -112,24 +112,27 @@ aKnot.to(blKnot, 3, {
 // LOOP TEXT ROTATION
 
 TweenMax.to(blYouLeft, 2.5,{
-    morphSVG: {shape: '.blYouRight', map:"complexity"},
+    morphSVG: {shape: '.blYouRight', map: 'complexity'},
     repeat: -1,
     yoyo: true,
-    ease: Power1.easeInOut
+    ease: Power1.easeInOut,
+    delay: randMinMax(0,2)
 });
 
 TweenMax.to(blMadeLeft, 2.5,{
     morphSVG: '.blMadeRight',
     repeat: -1,
     yoyo: true,
-    ease: Power1.easeInOut
+    ease: Power1.easeInOut,
+    delay: randMinMax(0,2)
 });
 
 TweenMax.to(blItLeft, 2.5,{
     morphSVG: '.blItRight',
     repeat: -1,
     yoyo: true,
-    ease: Power1.easeInOut
+    ease: Power1.easeInOut,
+    delay: randMinMax(0,2),
 });
 
 // LOOP STRING FLOW
@@ -146,36 +149,51 @@ TweenMax.set(bl, {
     scale: 0.3
 })
 
-function blMake() {
+var blMake = function() {
+
+    var positions = [-100, 0, 150];
+
     for (var i=0; i < bl.length; i++){
+
+        var balloonTL = new TimelineMax({paused: true});
+        var stringTL = new TimelineMax({repeat: -1});
 
         var wrapper = blwrap[i];
         var balloon = bl[i];
-        var x = 0 - 100 + (100 * i);
-        var tl = new TimelineMax({paused: true});
-        tl
-        .set(wrapper, {
-            x: x,
-            scale: randMinMax(0.9, 1)
+        var string = balloon.getElementsByClassName("string")[0];
+
+        stringTL
+        .delay(randMinMax(0,2))
+        .to(string, 1.5, {
+            morphSVG: '#string2',
+            ease: Power0.easeInOut,
         })
-        .to(balloon, 1, {
-        y: 200,
-        x:0
-        }, 'blYouStart')
-        .to(balloon, 2, {
-        scale: 1.5,
-        ease: Back.easeOut.config(4)
-        }, 'blYouStart')
-        .to(balloon, 4, {
-        scale: 0.7,
-        x: -100,
-        delay: 2,
-        ease: Back.easeIn
-        });
+        .to(string, 1.5, {
+            morphSVG: '#string3',
+            ease: Power0.easeInOut,
+        })
+        .to(string, 1.5, {
+            morphSVG: '#string4',
+            ease: Power0.easeInOut,
+        })
+        .to(string, 1.5, {
+            morphSVG: '#string1',
+            ease: Power0.easeInOut,
+        })
+        ;
 
-        tl.tweenID = i;
+        var x = positions.shift();
+        console.log(x);
 
-        blCache.push(tl);
+        balloonTL
+        .set(wrapper, {x: x, scale: randMinMax(0.9, 1)})
+        .to(balloon, 1, {y: 200, x:0}, 'blYouStart')
+        .to(balloon, 2, {scale: 1.5,ease: Back.easeOut.config(4)}, 'blYouStart')
+        .to(balloon, 4, {scale: 1,x: -100,delay: 2,ease: Back.easeIn});
+
+        balloonTL.tweenID = i;
+
+        blCache.push(balloonTL);
     }
 }
 
@@ -189,24 +207,24 @@ function blCall(number){
     thisTween[0].play();
 }
 
-aString
-.to(string1, 1.5, {
-    morphSVG: '#string2',
-    ease: Power0.easeInOut,
-}, 'stringStart-=0.3')
-.to(string1, 1.5, {
-    morphSVG: '#string3',
-    ease: Power0.easeInOut,
-})
-.to(string1, 1.5, {
-    morphSVG: '#string4',
-    ease: Power0.easeInOut,
-})
-.to(string1, 1.5, {
-    morphSVG: '#string1',
-    ease: Power0.easeInOut,
-})
-;
+//aString
+//.to(string1, 1.5, {
+//    morphSVG: '#string2',
+//    ease: Power0.easeInOut,
+//}, 'stringStart-=0.3')
+//.to(string1, 1.5, {
+//    morphSVG: '#string3',
+//    ease: Power0.easeInOut,
+//})
+//.to(string1, 1.5, {
+//    morphSVG: '#string4',
+//    ease: Power0.easeInOut,
+//})
+//.to(string1, 1.5, {
+//    morphSVG: '#string1',
+//    ease: Power0.easeInOut,
+//})
+//;
 
 // BALLOON SIZE PULSE
 
