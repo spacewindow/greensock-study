@@ -1,8 +1,17 @@
+svg * {
+  position: relative; }
+
 svg {
   position: absolute;
-  overflow: hidden; }
+  overflow: hidden;
+  width: 400px;
+  height: 400px; }
 
-svg * {
-  position: absolute; }
+#controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 310px;
+  transform: translate(-50%, 120px); }
 
 /*# sourceMappingURL=banner.css.map */

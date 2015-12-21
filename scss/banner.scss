@@ -4,15 +4,28 @@
 
 svg *{
 //    fill: inherit;
+    position: relative;
 }
 
 svg{
     position: absolute;
     overflow: hidden;
+    width: 400px;
+    height: 400px;
 //    fill: red;
 //    transform: rotate(35deg);
 }
 
-svg *{
-    position: absolute;
+//svg *{
+//    position: absolute;
+//}
+
+#controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 310px;
+  transform: translate(-50%, 120px);
 }
+
+

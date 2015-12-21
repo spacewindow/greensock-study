@@ -25,7 +25,6 @@ var hey = select('.hey'),
     dust = selectAll('.dust'),
     square = select('.square'),
     squarefull = select('.squarefull'),
-    squarebulge = select('.squarebulge'),
     squareleft = select('.squareleft'),
     squareright = select('.squareright'),
     youmadeit = select('.youmadeit'),
@@ -38,15 +37,17 @@ var hey = select('.hey'),
 
 // SET UP
 
-
 var mainTL = new TimelineMax({
-    paused: true
+    paused: true,
+//    onUpdate: updateSlider
 });
+
+
 
 // SETUP
 
 mainTL
-.set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit, squarebulge, squareleft, squareright], {
+.set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit], {
     autoAlpha: 0
 })
 ;
@@ -60,56 +61,35 @@ tlsquareup
         transformOrigin: 'center bottom',
     })
     .set(square, {
-        scaleY: 0,
-        fill: 'black'
+        scaleY: 0
     })
-    .set([squareleft, squareright], {
-        fill: 'black'
+    .to(squarefull, 0.1, {
+        fill: 'green'
     })
     .to(square, 2,{
         scaleY: 1,
         ease: Power4.easeOut
     }, 'squareUp')
-    .to([squareleft, squareright], 2, {
+    .to(squarefull, 2, {
         fill: 'lime'
     }, 'squareUp')
-    .to([squareleft, squareright], 0, {
-        opacity: 0
-    })
 ;
 
 mainTL.add(tlsquareup);
-mainTL.add('squareflex');
-
-var tlsquareflex = new TimelineMax();
-
-tlsquareflex
-    .set(squarebulge, {
-    autoAlpha: 0
-})
-    .set(square, {
-        autoAlpha: 1,
-        fill: 'red'
-    })
-    .to(squarefull, 0.5, {
-        morphSVG: '.squarebulge',
-        repeat: 1,
-        yoyo: true,
-        ease: Power2.easeOut
-    })
-;
-
-mainTL.add(tlsquareflex, 'squareflex');
+mainTL.add('squareDown')
 
 // SQUARE FALL
 
 var tlsquare = new TimelineMax();
 
 tlsquare
-.set([square, squareleft, squareright], {
-//        transformOrigin: 'center bottom',
-//        scaleY: 1,
+.set(squarefull, {
+        autoAlpha: 0,
     })
+.set([squareleft, squareright], {
+    autoAlpha: 1,
+    fill: 'lime'
+})
     .to(squareleft, 2, {
         skewX: -12,
         ease: Power4.easeIn
@@ -121,14 +101,11 @@ tlsquare
     .to([square], 2, {
         scaleY: 0,
         ease: Power4.easeIn,
-//        onComplete:tlsquareDone,
-    }, 'squarefall');
+    }, 'squarefall')
+;
 
-//function tlsquareDone(){
-//    mainTL.add('squareDown', "-=1");
-//}
 
-mainTL.add(tlsquare);
+mainTL.add(tlsquare, 'squareDown');
 
 // DUST CLOUDS
 
@@ -226,6 +203,22 @@ mainTL.play(0);
 
 //mainTL.pause(3);
 
+//function updateSlider() {
+//  $("#slider").slider("value", mainTL.progress() *100);
+//}
+//
+//
+//$("#slider").slider({
+//  range: false,
+//  min: 0,
+//  max: 100,
+//  step:.1,
+//  slide: function ( event, ui ) {
+//    mainTL.pause();
+//    //adjust the timeline’s progress() based on slider value
+//    mainTL.progress( ui.value/100 );
+//    }
+//});
 
 
 
