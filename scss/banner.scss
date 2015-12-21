@@ -10,8 +10,8 @@ svg *{
 svg{
     position: absolute;
     overflow: hidden;
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
 //    fill: red;
 //    transform: rotate(35deg);
 }
@@ -26,6 +26,10 @@ svg{
   left: 50%;
   width: 310px;
   transform: translate(-50%, 120px);
+}
+
+.grain{
+    pointer-events: none;
 }
 
 

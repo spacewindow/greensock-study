@@ -42,32 +42,27 @@ var
     blItLeft = select('.blItLeft'),
     blItRight = select('.blItRight'),
     blReflect = select('.blReflect'),
-    blKnot = select('.blKnot'),
+    blKnot = selectAll('.blKnot'),
     blBody = select('.blBody'),
     bl = selectAll('.bl'),
     string1 = selectAll('.string'),
     balloonCam = select('.balloonCam'),
-    grain = select('.grain')
+    grain = select('.grain'),
+    blwrap = selectAll('.balloonWrapper'),
+    blCache = []
     ;
 
 
 var testTL = new TimelineMax();
 
-TweenLite.ticker.fps(24);
+//TweenLite.ticker.fps(24);
 
 var aString = new TimelineMax({repeat: -1});
-var aYou = new TimelineMax({repeat: -1});
+var aKnot = new TimelineMax({repeat: -1});
 
-TweenMax.set([blYouRight, blMadeRight, blItRight], {
-    autoAlpha: 0
-});
-TweenMax.staggerTo(bl, 0 ,{
-    cycle: {
-      x: [-100, 100, 0],
-      scale: [1, 1.2, 1.1],
-    },
-    transformOrigin: 'center 20%',
-});
+
+// set balloon transform point
+
 
 //FILM GRAIN
 
@@ -82,21 +77,39 @@ TweenMax.to(grain, 0.3, {
 
 //findShapeIndex(".blMadeLeft", ".blMadeRight");
 
-TweenMax.to(balloonCam, 5, {
-    scale: 2,
-    rotation: 10,
-    yoyo: true,
-    repeat: -1
-})
+TweenMax.set([bl, blKnot], {
+    transformOrigin: '30% 20%',
+    rotation: 15,
+});
+
+//TweenMax.to(balloonCam, 5, {
+//    scale: 2,
+//    rotation: 10,
+//    yoyo: true,
+//    repeat: -1
+//});
+
+// LOOP BALLOON rotation and knot
 
 var aBalloon = new TimelineMax({repeat: -1});
 
 aBalloon.to(bl, 3, {
-    rotation: -15,
+    rotation: -10,
     yoyo: true,
     repeat: -1,
     ease: Power1.easeInOut,
 }, '+=2');
+
+aKnot.to(blKnot, 3, {
+    rotation: -15,
+    scaleY: 1.2,
+    yoyo: true,
+    repeat: -1,
+    ease: Power1.easeInOut,
+}, '+=3');
+
+
+// LOOP TEXT ROTATION
 
 TweenMax.to(blYouLeft, 2.5,{
     morphSVG: {shape: '.blYouRight', map:"complexity"},
@@ -119,11 +132,62 @@ TweenMax.to(blItLeft, 2.5,{
     ease: Power1.easeInOut
 });
 
+// LOOP STRING FLOW
+
 
 TweenMax.set(string1, {
     transformOrigin: '0% 0%',
     rotation: -10
 });
+
+TweenMax.set(bl, {
+    y: 800,
+    x: -100,
+    scale: 0.3
+})
+
+function blMake() {
+    for (var i=0; i < bl.length; i++){
+
+        var wrapper = blwrap[i];
+        var balloon = bl[i];
+        var x = 0 - 100 + (100 * i);
+        var tl = new TimelineMax({paused: true});
+        tl
+        .set(wrapper, {
+            x: x,
+            scale: randMinMax(0.9, 1)
+        })
+        .to(balloon, 1, {
+        y: 200,
+        x:0
+        }, 'blYouStart')
+        .to(balloon, 2, {
+        scale: 1.5,
+        ease: Back.easeOut.config(4)
+        }, 'blYouStart')
+        .to(balloon, 4, {
+        scale: 0.7,
+        x: -100,
+        delay: 2,
+        ease: Back.easeIn
+        });
+
+        tl.tweenID = i;
+
+        blCache.push(tl);
+    }
+}
+
+blMake();
+
+function blCall(number){
+
+    var thisTween = blCache.filter(function( obj ) {
+      return obj.tweenID == number;
+    });
+    thisTween[0].play();
+}
 
 aString
 .to(string1, 1.5, {
@@ -143,6 +207,31 @@ aString
     ease: Power0.easeInOut,
 })
 ;
+
+// BALLOON SIZE PULSE
+
+TweenMax.staggerTo(blwrap, 1.2, {
+    scale: 1.06,
+    repeat: -1,
+    yoyo: true,
+    ease: Power1.easeInOut
+});
+
+TweenMax.set(blwrap, {
+    rotation: 10
+});
+
+// ANIMATE IN
+
+var aBl = new TimelineMax();
+
+aBl
+.call(blCall, ["0"])
+.to({}, 2, {})
+.call(blCall, ["2"])
+.to({}, 2, {})
+.call(blCall, ["1"]);
+
 
 //var aCamera = new TimelineMax();
 

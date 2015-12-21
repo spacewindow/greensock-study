@@ -4,8 +4,8 @@ svg * {
 svg {
   position: absolute;
   overflow: hidden;
-  width: 400px;
-  height: 400px; }
+  width: 600px;
+  height: 600px; }
 
 #controls {
   position: absolute;
@@ -13,5 +13,8 @@ svg {
   left: 50%;
   width: 310px;
   transform: translate(-50%, 120px); }
+
+.grain {
+  pointer-events: none; }
 
 /*# sourceMappingURL=banner.css.map */
