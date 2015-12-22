@@ -76,7 +76,7 @@ var blCreate = function() {
 
         var balloon = bl[i];
 //        var tlName = balloon.parentNode.getID("class")
-        var tlName = balloon.parentNode.id;;
+        var tlName = balloon.parentNode.id;
 
         this[tlName] = new TimelineMax({repeat: -1, paused:true});
 
