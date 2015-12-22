@@ -35,21 +35,13 @@ var
 //    lights = select('.lights'),
 //    thanks = select('.thanks'),
 //    glint = select('.glint'),
-    blYouLeft = select('.blYouLeft'),
-    blYouRight = select('.blYouRight'),
-    blMadeLeft = select('.blMadeLeft'),
-    blMadeRight = select('.blMadeRight'),
-    blItLeft = select('.blItLeft'),
-    blItRight = select('.blItRight'),
-    blReflect = select('.blReflect'),
-    blKnot = selectAll('.blKnot'),
-    blBody = select('.blBody'),
+
     bl = selectAll('.bl'),
-//    string1 = selectAll('.string'),
-    balloonCam = select('.balloonCam'),
+    blwrap = selectAll('.blwrap'),
     grain = select('.grain'),
-    blwrap = selectAll('.balloonWrapper'),
-    blCache = []
+    You = select('#blYou'),
+    Made = select('#blMade'),
+    It = select('#blIt')
     ;
 
 
@@ -77,178 +69,243 @@ TweenMax.to(grain, 0.3, {
 
 //findShapeIndex(".blMadeLeft", ".blMadeRight");
 
-TweenMax.set([bl, blKnot], {
-    transformOrigin: '30% 20%',
-    rotation: 15,
-});
 
-//TweenMax.to(balloonCam, 5, {
-//    scale: 2,
-//    rotation: 10,
-//    yoyo: true,
-//    repeat: -1
-//});
-
-// LOOP BALLOON rotation and knot
-
-var aBalloon = new TimelineMax({repeat: -1});
-
-aBalloon.to(bl, 3, {
-    rotation: -10,
-    yoyo: true,
-    repeat: -1,
-    ease: Power1.easeInOut,
-}, '+=2');
-
-aKnot.to(blKnot, 3, {
-    rotation: -15,
-    scaleY: 1.2,
-    yoyo: true,
-    repeat: -1,
-    ease: Power1.easeInOut,
-}, '+=3');
-
-
-// LOOP TEXT ROTATION
-
-TweenMax.to(blYouLeft, 2.5,{
-    morphSVG: {shape: '.blYouRight', map: 'complexity'},
-    repeat: -1,
-    yoyo: true,
-    ease: Power1.easeInOut,
-    delay: randMinMax(0,2)
-});
-
-TweenMax.to(blMadeLeft, 2.5,{
-    morphSVG: '.blMadeRight',
-    repeat: -1,
-    yoyo: true,
-    ease: Power1.easeInOut,
-    delay: randMinMax(0,2)
-});
-
-TweenMax.to(blItLeft, 2.5,{
-    morphSVG: '.blItRight',
-    repeat: -1,
-    yoyo: true,
-    ease: Power1.easeInOut,
-    delay: randMinMax(0,2),
-});
-
-// LOOP STRING FLOW
-
-
-TweenMax.set(string1, {
-    transformOrigin: '0% 0%',
-    rotation: -10
-});
-
-TweenMax.set(bl, {
-    y: 800,
-    x: -100,
-    scale: 0.3
-})
-
-var blMake = function() {
-
-    var positions = [-100, 0, 150];
+var blCreate = function() {
 
     for (var i=0; i < bl.length; i++){
 
-        var balloonTL = new TimelineMax({paused: true});
-        var stringTL = new TimelineMax({repeat: -1});
-
-        var wrapper = blwrap[i];
         var balloon = bl[i];
+//        var tlName = balloon.parentNode.getID("class")
+        var tlName = balloon.parentNode.id;;
+
+        this[tlName] = new TimelineMax({repeat: -1, paused:true});
+
+        var stringTL = new TimelineMax({repeat: -1});
+        var wordTL = new TimelineMax();
+        var knotTL = new TimelineMax();
+
         var string = balloon.getElementsByClassName("string")[0];
+        var word = balloon.getElementsByClassName("word")[0];
+        var wordright = balloon.getElementsByClassName("wordright")[0];
+        var knot = balloon.getElementsByClassName("knot")[0];
+
+        // WORD LOOP
+
+        wordTL
+        .set(wordright, {
+            opacity:0
+        })
+        .to(word, 2.5,{
+            morphSVG: {shape: wordright, map: 'complexity'},
+            repeat: -1,
+            yoyo: true,
+            ease: Power1.easeInOut,
+        })
+        ;
+
+        // STRING LOOP
 
         stringTL
-        .delay(randMinMax(0,2))
-        .to(string, 1.5, {
+        .to(string, 1, {
             morphSVG: '#string2',
             ease: Power0.easeInOut,
-        })
-        .to(string, 1.5, {
+        }, 'stringStart')
+        .to(string, 1, {
             morphSVG: '#string3',
             ease: Power0.easeInOut,
         })
-        .to(string, 1.5, {
+        .to(string, 1, {
             morphSVG: '#string4',
             ease: Power0.easeInOut,
         })
-        .to(string, 1.5, {
+        .to(string, 1, {
             morphSVG: '#string1',
             ease: Power0.easeInOut,
         })
         ;
 
-        var x = positions.shift();
-        console.log(x);
 
-        balloonTL
-        .set(wrapper, {x: x, scale: randMinMax(0.9, 1)})
-        .to(balloon, 1, {y: 200, x:0}, 'blYouStart')
-        .to(balloon, 2, {scale: 1.5,ease: Back.easeOut.config(4)}, 'blYouStart')
-        .to(balloon, 4, {scale: 1,x: -100,delay: 2,ease: Back.easeIn});
+        var stringRotate = new TimelineMax();
 
-        balloonTL.tweenID = i;
+        stringRotate
+        .set(string, {
+            transformOrigin: '0% 0%',
+            rotation: -10
+        })
+        .to(string, 3, {
+            yoyo: true,
+            repeat: -1,
+            rotation: 10
+        });
 
-        blCache.push(balloonTL);
+        var blRotate = new TimelineMax();
+
+        blRotate
+        .set(bl, {
+            transformOrigin: '40% 20%',
+            rotation: -10
+        })
+        .to(bl, 3, {
+            yoyo: true,
+            repeat: -1,
+            rotation: 10
+        });
+
+        knotTL
+        .set(knot, {
+            transformOrigin: '30% 20%',
+            rotation: 15,
+        })
+        .to(knot, 3, {
+            rotation: -15,
+            scaleY: 1.2,
+            yoyo: true,
+            repeat: -1,
+            ease: Power1.easeInOut,
+        });
+
+        this[tlName].add(wordTL, 0).add(stringTL, 0).add(stringRotate, 0).add(knotTL, 3);
+
     }
 }
 
-blMake();
+blCreate(); // Creates 3 paused timelines: blYou, blMade, blIt
 
-function blCall(number){
-
-    var thisTween = blCache.filter(function( obj ) {
-      return obj.tweenID == number;
-    });
-    thisTween[0].play();
-}
-
-//aString
-//.to(string1, 1.5, {
-//    morphSVG: '#string2',
-//    ease: Power0.easeInOut,
-//}, 'stringStart-=0.3')
-//.to(string1, 1.5, {
-//    morphSVG: '#string3',
-//    ease: Power0.easeInOut,
-//})
-//.to(string1, 1.5, {
-//    morphSVG: '#string4',
-//    ease: Power0.easeInOut,
-//})
-//.to(string1, 1.5, {
-//    morphSVG: '#string1',
-//    ease: Power0.easeInOut,
-//})
-//;
 
 // BALLOON SIZE PULSE
 
-TweenMax.staggerTo(blwrap, 1.2, {
+TweenMax.staggerTo(bl, 1.2, {
     scale: 1.06,
     repeat: -1,
     yoyo: true,
     ease: Power1.easeInOut
-});
+}, 1);
 
-TweenMax.set(blwrap, {
-    rotation: 10
-});
+TweenMax.staggerTo(bl, 1, {
+    cycle: {
+        x: [10, 20, 50],
+        y: [-10, 20, 50]
+    },
+    repeat: -1,
+    yoyo: true,
+    ease: Power1.easeInOut
+}, 1);
 
 // ANIMATE IN
 
-var aBl = new TimelineMax();
+var aBalloons = new TimelineMax();
 
-aBl
-.call(blCall, ["0"])
-.to({}, 2, {})
-.call(blCall, ["2"])
-.to({}, 2, {})
-.call(blCall, ["1"]);
+var aYou = new TimelineMax();
+var aMade = new TimelineMax();
+var aIt = new TimelineMax();
+
+aYou
+.set([You, Made], {
+    y: 800,
+    x: -100,
+    rotation: 10
+})
+.set(It, {
+    y: 800,
+    x: 100,
+    rotation: 10
+})
+.call(function(){
+    blYou.play(0)
+})
+.to(You, 2, {
+    x:0,
+    y:0,
+    scale: 2,
+    ease: Back.easeInOut
+})
+.to(You, 2, {
+    x:-140,
+    y:200,
+    scale: 1,
+    ease: Back.easeInOut
+})
+.to(You, 2, {
+    y: 0,
+    ease: Back.easeInOut
+})
+.to(You, 2, {
+    delay: 4,
+    y: -600,
+    x:900,
+    rotation: 50,
+    scaleX: 0.3,
+    scaleY: 0.7,
+    ease: Back.easeInOut
+})
+;
+
+aMade
+.call(function(){
+    blMade.play(0)
+})
+.to(Made, 2, {
+    x:0,
+    y:0,
+    scale: 2,
+    ease: Back.easeInOut
+})
+.to(Made, 2, {
+    x:-140,
+    y:200,
+    scale: 1,
+    ease: Back.easeInOut
+})
+.to(Made, 2, {
+    delay: 1,
+    scale: 1.4
+})
+.to(Made, 2, {
+    delay: 2,
+    y: -600,
+    x:900,
+    rotation: 50,
+    scaleX: 0.3,
+    scaleY: 0.7,
+    ease: Back.easeInOut
+})
+;
+
+
+aIt
+.call(function(){
+    blIt.play(0)
+})
+.to(It, 2, {
+    x:200,
+    y:0,
+    scale: 1.8,
+    ease: Back.easeInOut
+})
+.to(It, 2, {
+    x:100,
+    y:100,
+    scale: 1,
+    ease: Back.easeInOut
+})
+.to(It, 2.5, {
+    delay: 3,
+    y: -600,
+    x:900,
+    rotation: 50,
+    scaleX: 0.3,
+    scaleY: 0.7,
+    ease: Back.easeInOut
+})
+.call(function(){
+    blYou.kill();
+    blYou.kill();
+    blYou.kill();
+})
+;
+
+aBalloons.add(aYou, 0).add(aMade, 1.5).add(aIt, 4);
+
 
 
 //var aCamera = new TimelineMax();
