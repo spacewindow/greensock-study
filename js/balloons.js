@@ -19,29 +19,13 @@ var selectAll = function (s) {
 };
 
 var
-//    hey = select('.hey'),
-//    you = select('.you'),
-//    overhere = select('.overhere'),
-//    board = select('.board'),
-//    dust = selectAll('.dust'),
-//    square = select('.square'),
-//    squarefull = select('.squarefull'),
-//    squarebulge = select('.squarebulge'),
-//    squareleft = select('.squareleft'),
-//    squareright = select('.squareright'),
-//    youmadeit = select('.youmadeit'),
-//    ymd_words = selectAll('.word'),
-//    underline = select('.underline'),
-//    lights = select('.lights'),
-//    thanks = select('.thanks'),
-//    glint = select('.glint'),
-
     bl = selectAll('.bl'),
     blwrap = selectAll('.blwrap'),
     grain = select('.grain'),
     You = select('#blYou'),
     Made = select('#blMade'),
-    It = select('#blIt')
+    It = select('#blIt'),
+    cloud = select('.cloud')
     ;
 
 
@@ -56,7 +40,7 @@ var aKnot = new TimelineMax({repeat: -1});
 // set balloon transform point
 
 
-//FILM GRAIN
+// FILM GRAIN
 
 TweenMax.to(grain, 0.3, {
     transformOrigin: 'center center',
@@ -321,3 +305,79 @@ aBalloons.add(aYou, 0).add(aMade, 1.5).add(aIt, 4);
 
 testTL.add(aString);
 //testTL.add(aCamera, 0);
+
+var dupElement = function(element) {
+  var newElement = element.cloneNode(true);
+  element.parentNode.insertBefore(newElement, element.nextSibling);
+  return newElement;
+};
+
+
+
+// CLOUDS ANIMATION
+
+var tapOn = false,
+  cloudsTL = new TimelineMax();
+
+var now = performance.now.bind(performance);
+var ease = Power0.easeOut;
+var cache = [];
+var emitter = select(".emitter");
+var last = now();
+var frequency = 200;
+
+
+for (var i = 0; i < 100; i++) {
+  createParticle();
+}
+
+function createParticle() {
+
+  var particle = dupElement(cloud);
+
+  var x = randMinMax(0, -800);
+  var color = randMinMax(0, 200);
+  var time1 = randMinMax(1, 2);
+  var time2 = randMinMax(1, 2);
+
+  var tl = new TimelineLite({ paused: true, onComplete: onComplete })
+    .set(particle, { autoAlpha: 0.7, background:"hsl(" + color + ", 90%, 60%)"})
+    .to(particle, time1, { x: x, y: 800, ease: ease })
+    .to({}, time2, {}); // Just a delay so it will sit at the bottom before restarting
+
+  function onComplete() {
+    TweenMax.set(particle, { autoAlpha: 0 });
+    tl.pause();
+    cache.push(tl);
+  }
+
+  cache.push(tl);
+}
+
+
+$('svg').click(function() {
+  tapOn = !tapOn;
+  if (tapOn) {
+
+    TweenMax.ticker.addEventListener("tick", emit); // the ticker is  a Greensock object http://greensock.com/?class_element=js-tweenMax-target
+
+  } else {
+
+    TweenMax.ticker.removeEventListener("tick", emit);
+  }
+});
+
+function emit() {
+
+  var current = now();
+  var elapsed = current - last;
+
+  if (elapsed > frequency) {
+
+    var tween = cache.shift(); // removes first item in cache array
+
+    tween && tween.play(0);
+    last = current;
+  }
+}
+

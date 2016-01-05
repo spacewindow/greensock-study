@@ -32,12 +32,20 @@
         <image xlink:href="images/grain.png" x="0" y="0" width="250" height="250" />
       </pattern>
 
-<!--   WORDS   -->
-
   </defs>
   <rect width="800" height="800"/>
 
+<!--  CLOUD  -->
+
+    <svg class="emitter" x="800" y="0" style="overflow: visible">
+
+        <circle class="cloud" cx="0" cy="0" r="10" fill="white"/>
+
+
+    </svg>
+
     <!-- YOU balloon -->
+
 
     <g class="balloonCam">
 
