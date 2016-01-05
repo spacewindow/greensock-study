@@ -25,7 +25,8 @@ var
     You = select('#blYou'),
     Made = select('#blMade'),
     It = select('#blIt'),
-    cloud = select('.cloud')
+    cloud = selectAll('.cloud'),
+    cloudGroup = select('#clouds')
     ;
 
 
@@ -316,68 +317,37 @@ var dupElement = function(element) {
 
 // CLOUDS ANIMATION
 
-var tapOn = false,
-  cloudsTL = new TimelineMax();
+var tlClouds = new TimelineMax();
 
-var now = performance.now.bind(performance);
-var ease = Power0.easeOut;
-var cache = [];
-var emitter = select(".emitter");
-var last = now();
-var frequency = 200;
+var cloudsOn = true;
 
+var cloudCheck = function(tween){
+    if (cloudsOn){
+        console.log('cloudsOn');
+        tween.play();
+    }
+};
 
-for (var i = 0; i < 100; i++) {
-  createParticle();
-}
-
-function createParticle() {
-
-  var particle = dupElement(cloud);
-
-  var x = randMinMax(0, -800);
-  var color = randMinMax(0, 200);
-  var time1 = randMinMax(1, 2);
-  var time2 = randMinMax(1, 2);
-
-  var tl = new TimelineLite({ paused: true, onComplete: onComplete })
-    .set(particle, { autoAlpha: 0.7, background:"hsl(" + color + ", 90%, 60%)"})
-    .to(particle, time1, { x: x, y: 800, ease: ease })
-    .to({}, time2, {}); // Just a delay so it will sit at the bottom before restarting
-
-  function onComplete() {
-    TweenMax.set(particle, { autoAlpha: 0 });
-    tl.pause();
-    cache.push(tl);
-  }
-
-  cache.push(tl);
-}
-
-
-$('svg').click(function() {
-  tapOn = !tapOn;
-  if (tapOn) {
-
-    TweenMax.ticker.addEventListener("tick", emit); // the ticker is  a Greensock object http://greensock.com/?class_element=js-tweenMax-target
-
-  } else {
-
-    TweenMax.ticker.removeEventListener("tick", emit);
-  }
-});
-
-function emit() {
-
-  var current = now();
-  var elapsed = current - last;
-
-  if (elapsed > frequency) {
-
-    var tween = cache.shift(); // removes first item in cache array
-
-    tween && tween.play(0);
-    last = current;
-  }
-}
+tlClouds
+.set(cloud, {
+    x:0,
+    y:-200,
+    opacity: 0.5
+})
+.set(clouds, {
+    rotation: 45,
+    x: 500,
+    y: -100
+})
+.staggerTo(cloud, 2, {
+    cycle:{
+        x: [-400, -200, 0, 300]
+    },
+    y: 1000,
+    scale: 4,
+    ease: Power4.easeIn,
+    onComplete: cloudCheck,
+    onCompleteParams: ['{self}']
+}, 0.2)
+;
 
