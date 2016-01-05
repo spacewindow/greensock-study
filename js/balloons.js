@@ -299,8 +299,8 @@ aIt
 })
 .call(function(){
     blYou.kill();
-    blYou.kill();
-    blYou.kill();
+    blMade.kill();
+    blIt.kill();
 })
 ;
 
