@@ -44,20 +44,15 @@ var hey = select('.hey'),
 
 // SET UP
 
-var mainTL = new TimelineMax({
-//    paused: true,
-//    onUpdate: updateSlider
-});
+var mainTL = new TimelineMax();
+
+var ease = Power0.easeIn;
 
 
 // SETUP
 
 mainTL
-.set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit], {
-    autoAlpha: 0
-})
-.set(strip1, {transformOrigin: '100% 50%', rotation: 45})
-//.set(signfinish, {rotation: 45})
-//.to(strip1r, 3, {x:600, ease: Power0.easeIn})
-//.to(strip2r, 3, {x:400, ease: Power0.easeIn}, '-=1.5')
+.set('#label2', {x: -700})
+.to('#label2', 0.75, {x: 1400, ease: ease}, 'startAnim')
+.to('#clipping', 0.5, {attr: {x: -650}, ease: ease}, 'startAnim')
 ;

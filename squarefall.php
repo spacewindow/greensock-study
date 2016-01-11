@@ -8,7 +8,7 @@
 
 
 
-<?php include('images/banner.svg'); ?>
+<?php include('images/banner-opening.svg'); ?>
 
 <script src="js/TweenMax.min.js"></script>
 
