@@ -32,7 +32,8 @@ var hey = select('.hey'),
     underline = select('.underline'),
     lights = select('.lights'),
     thanks = select('.thanks'),
-    glint = select('.glint');
+    glint = select('.glint'),
+    sign = select('.sign');
 
 
 // SET UP
@@ -47,6 +48,7 @@ var mainTL = new TimelineMax({
 // SETUP
 
 mainTL
+.to(sign, 10, {attr: {x: 400}})
 .set([you, board, dust, overhere, underline, thanks, glint, lights, youmadeit], {
     autoAlpha: 0
 })

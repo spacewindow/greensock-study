@@ -74,4 +74,24 @@
   <text style="text-anchor: middle" x="0" y="0" class="overhere" font-size="68.48" font-family="Museo">OVER<tspan x="-0.04" y="65.39" font-size="72.66">HERE</tspan></text>
   <path class="underline"  class="underline" d="M86.67,281c-4,0-6-2.09-6-6v-7.14c0-4,2.09-6,6-6H313.33c4,0,6,2.09,6,6v7.14c0,4-2.09,6-6,6H86.67Z"/>
   <text x="0" y="0" class="you"  font-size="109.84" font-family="Museo">YOU!</text>
+    <g id="strip1">
+    <svg class="signstart" width="400" height="400" x="-200" y="0" >
+
+
+
+            <rect class="rect" fill="red" x="00" y="150" width="400" height="100" />
+
+
+
+    </svg>
+        </g>
+
+    <svg class="signfinish" width="400" height="400" x="200" y="0" >
+
+        <g id="strip2">
+
+            <rect class="rect" fill="white" x="-400" y="150" width="400" height="100" />
+
+        </g>
+    </svg>
 </svg>

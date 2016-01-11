@@ -12,7 +12,8 @@
 
 <script src="js/TweenMax.min.js"></script>
 
-    <script src="js/squarefall.js"></script>
+    <script src="js/label.js"></script>
+<!--    <script src="js/squarefall.js"></script>-->
 
 	</body>
 </html>
