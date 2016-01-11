@@ -26,7 +26,7 @@ var
     Made = select('#blMade'),
     It = select('#blIt'),
     cloud = selectAll('.cloud'),
-    cloudGroup = select('#clouds')
+    cloudGroup = selectAll('.cloudGroup')
     ;
 
 
@@ -185,6 +185,7 @@ var aMade = new TimelineMax();
 var aIt = new TimelineMax();
 
 aYou
+.call(toggleClouds)
 .set([You, Made], {
     y: 800,
     x: -100,
@@ -282,6 +283,7 @@ aIt
     scaleY: 0.7,
     ease: Back.easeInOut
 })
+.call(toggleClouds)
 .call(function(){
     blYou.kill();
     blMade.kill();
@@ -307,47 +309,69 @@ aBalloons.add(aYou, 0).add(aMade, 1.5).add(aIt, 4);
 testTL.add(aString);
 //testTL.add(aCamera, 0);
 
-var dupElement = function(element) {
-  var newElement = element.cloneNode(true);
-  element.parentNode.insertBefore(newElement, element.nextSibling);
-  return newElement;
-};
-
-
 
 // CLOUDS ANIMATION
 
-var tlClouds = new TimelineMax();
+TweenMax.set(cloudGroup[0], {rotation: 45, y:-400, x: 600});
+TweenMax.set(cloudGroup[1], {rotation: 45, y:-400, x: 600, scale: 2, opacity: 0.5});
 
-var cloudsOn = true;
+var tapOn = false,
+  cloudsTL = new TimelineMax();
 
-var cloudCheck = function(tween){
-    if (cloudsOn){
-        console.log('cloudsOn');
-        tween.play();
-    }
+var now = performance.now.bind(performance);
+var ease = Power0.easeOut;
+var cache = [];
+var last = now();
+var numClouds = cloud.length;
+var frequency = 500;
+//console.log(numClouds);
+
+for (var i = 0; i < numClouds; i++) {
+  createParticle();
+}
+
+function createParticle() {
+
+//  var x = [-800, -600, -200, -100, 0, 100, 200, 300];
+var particle = cloud[i];
+
+  var tl = new TimelineLite({ paused: true, onComplete: onComplete })
+  .set(particle, { autoAlpha: 1 })
+    .to(particle, 1, { /*x: x[i],*/ y: 1300, ease: ease, scale: 2 })
+    .to({}, 2, {}); // Just a delay so it will sit at the bottom before restarting
+
+  function onComplete() {
+    TweenMax.set(particle, { autoAlpha: 0 });
+    tl.pause();
+    cache.push(tl);
+  }
+
+  cache.push(tl);
+}
+
+
+function toggleClouds() {
+  tapOn = !tapOn;
+  if (tapOn) {
+
+    TweenMax.ticker.addEventListener("tick", emit); // the ticker is  a Greensock object http://greensock.com/?class_element=js-tweenMax-target
+
+  } else {
+
+    TweenMax.ticker.removeEventListener("tick", emit);
+  }
 };
 
-tlClouds
-.set(cloud, {
-    x:0,
-    y:-200,
-    opacity: 0.5
-})
-.set(clouds, {
-    rotation: 45,
-    x: 500,
-    y: -100
-})
-.staggerTo(cloud, 2, {
-    cycle:{
-        x: [-400, -200, 0, 300]
-    },
-    y: 1000,
-    scale: 4,
-    ease: Power4.easeIn,
-    onComplete: cloudCheck,
-    onCompleteParams: ['{self}']
-}, 0.2)
-;
+function emit() {
 
+  var current = now();
+  var elapsed = current - last;
+
+  if (elapsed > frequency) {
+
+    var tween = cache.shift(); // removes first item in cache array
+
+    tween && tween.play(0);
+    last = current;
+  }
+};
