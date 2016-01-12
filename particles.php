@@ -3,6 +3,16 @@
     <link rel="stylesheet" type="text/css" href="/css/banner.css">
     <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 
+    <style>
+
+        #controls{
+            position: absolute;
+            top: 500px;
+            left:300px;
+        }
+
+    </style>
+
 	</head>
 	<body style="position:relative">
 
@@ -23,25 +33,6 @@
 
 <script src="js/particles.js"></script>
 
-<script>
-
-    $("#slider").slider({
-      range: false,
-      min: 0,
-      max: 100,
-      step:.1,
-      slide: function ( event, ui ) {
-        mainTL.pause();
-        //adjust the timeline’s progress() based on slider value
-        mainTL.progress( ui.value/100 );
-        }
-    });
-
-    function updateSlider() {
-      $("#slider").slider("value", tl.progress() *100);
-    }
-
-</script>
 
 	</body>
 </html>
