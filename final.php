@@ -8,12 +8,12 @@
 
 
 
-<?php include('images/banner-opening.svg'); ?>
+<?php include('images/final.svg'); ?>
 
 <script src="js/TweenMax.min.js"></script>
 <script src="js/MorphSVGPlugin.min.js"></script>
 
-    <script src="js/label.js"></script>
+    <script src="js/final.js"></script>
 <!--    <script src="js/squarefall.js"></script>-->
 
 	</body>
