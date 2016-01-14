@@ -46,6 +46,7 @@ mainTL
 .set('#hand-closed', {opacity:0})
 .set('#fullarm', {x:-1000, y: 300, scale: 1.2})
 .set('#sign', {opacity:0})
+.set('#landscape', {x:-200})
 
 // HAND REACH
 
@@ -149,7 +150,6 @@ mainTL
 // SET UP NEON TIMELINES
 
 var
-    fullSign = select('.sign-group'),
     baseArrow = select('.base-arrow'),
     glowLines = selectAll('.line'),
     here = select('.here'),
@@ -322,18 +322,6 @@ var
 var aString = new TimelineMax({repeat: -1});
 var aKnot = new TimelineMax({repeat: -1});
 
-
-// set balloon transform point
-
-
-// FILM GRAIN
-
-TweenMax.to(grain, 0.3, {
-    transformOrigin: 'center center',
-    rotation: 90,
-    repeat: -1,
-    ease: SteppedEase.config(1)
-})
 
 //TweenMax.to(svg, 2, {attr:{viewBox: '0 0 400 400'}, repeat: -1, yoyo: true, ease:Linear.easeNone});
 
@@ -655,7 +643,7 @@ mainTL.add(function(){aBalloons.play()});
 
 // FOR TESTING
 
-mainTL.play(10);
+mainTL.pause(0.3);
 
 
 
