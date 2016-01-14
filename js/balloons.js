@@ -312,8 +312,8 @@ testTL.add(aString);
 
 // CLOUDS ANIMATION
 
-TweenMax.set(cloudGroup[0], {rotation: 45, y:-400, x: 600});
-TweenMax.set(cloudGroup[1], {rotation: 45, y:-400, x: 600, scale: 2, opacity: 0.5});
+TweenMax.set(cloudGroup[0], {rotation: 45, y:-1000, x: 800, scale: 1.5});
+TweenMax.set(cloudGroup[1], {rotation: 45, y:-1000, x: 800, scale: 3, opacity: 0.5});
 
 var tapOn = false,
   cloudsTL = new TimelineMax();
@@ -337,7 +337,7 @@ var particle = cloud[i];
 
   var tl = new TimelineLite({ paused: true, onComplete: onComplete })
   .set(particle, { autoAlpha: 1 })
-    .to(particle, 1, { /*x: x[i],*/ y: 1300, ease: ease, scale: 2 })
+    .to(particle, 0.6, { /*x: x[i],*/ y: 1800, ease: ease, scale: 2 })
     .to({}, 2, {}); // Just a delay so it will sit at the bottom before restarting
 
   function onComplete() {
