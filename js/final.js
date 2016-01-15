@@ -147,9 +147,31 @@ mainTL
     ease: Power1.easeInOut
 }, 0, '-=0.8');
 
+TweenMax.set('#clouds1', {opacity: 0.2});
+var ease = Linear.easeNone;
+
+var cloudBG = new TimelineMax();
+
+cloudBG.to('#clouds1', 50, {xPercent: -30, ease: ease});
+
+TweenMax.set('#neon', {transformOrigin: 'center center', scale: 0.4});
+
+var cameraJiggle = new TimelineMax({paused: true, repeat: -1, yoyo:true})
+
+cameraJiggle
+.to(['#neon', '#landscape'], 0.5, {x:10, y:5})
+.to(['#neon', '#landscape'], 0.5, {x:-6, y:-10})
+.to(['#neon', '#landscape'], 0.5, {x:4, y:-2})
+.to(['#neon', '#landscape'], 0.5, {x:-8, y:4})
+;
+
+
+
+
 // SET UP NEON TIMELINES
 
 var
+    fullSign = select('#neon'),
     baseArrow = select('.base-arrow'),
     glowLines = selectAll('.line'),
     here = select('.here'),
@@ -161,11 +183,12 @@ var
     ;
 
 var linesTL = new TimelineMax({repeat: -1}),
-    hereTL = new TimelineMax({repeat: -1})
-    glowSignTL = new TimelineMax()
-    glowArrowTL = new TimelineMax({repeat: -1,  delay: 0.8})
-    overTL = new TimelineMax({repeat: -1})
-    neonCamera = new TimelineMax({paused: true})
+    hereTL = new TimelineMax({repeat: -1}),
+    glowSignTL = new TimelineMax(),
+    glowArrowTL = new TimelineMax({repeat: -1,  delay: 0.8}),
+    overTL = new TimelineMax({repeat: -1}),
+//    neonCamera = new TimelineMax({paused: true})
+    neonScaleTL = new TimelineMax()
     ;
 
 linesTL
@@ -248,60 +271,135 @@ overTL
 })
 ;
 
+neonScaleTL
+.to('#neon', 8, {scale:0.5});
+
 // NEON CAMERA...
-
-var cameraJiggle = new TimelineMax({paused: true, repeat: -1, yoyo:true})
-
-cameraJiggle
-.to('#neon', 0.5, {x:10, y:5})
-.to('#neon', 0.5, {x:-6, y:-10})
-.to('#neon', 0.5, {x:4, y:-2})
-.to('#neon', 0.5, {x:-8, y:4})
-;
 
 linesTL.pause(0);
 hereTL.pause(0);
 glowSignTL.pause(0);
 glowArrowTL.pause(0);
-overTL.pause(0)
-cameraJiggle.pause(0);
+overTL.pause(0);
+neonScaleTL.pause(0);
 
-mainTL
+var neonAppearTL = new TimelineMax({paused:true});
+
+
+
 
 // HIDE SIGN ELEMENTS FOR REVEAL
 
-.set(['#glow-lines', '#sign-base', '#arrow-base', '#over-base'], {opacity: 0}, 'startDust')
-.set('#neon', {scale: 0.4, transformOrigin: 'center center'}, 'startDust')
+ TweenMax.set(['#glow-lines', '#sign-base', '#arrow-base', '#over-base', '#land', '#mountains', '#clouds1'], {opacity: 0})
 
-// START NEON CAMERA LOOP
+neonAppearTL
 
-.add(function(){cameraJiggle.play()}, 'startDust')
-
-// REMOVE NEON BLACKOUT
-
-.to('#neonfade', 1, {opacity: 0},'startDust+=0.3')
 
 // START NEON ELEMENT TIMELINES
 
-.add(function(){overTL.play()}, 'startDust')
-.add(function(){hereTL.play()}, 'startDust+=1')
-.add(function(){linesTL.play()}, 'startDust+=2')
-.to('#glow-lines', 0.5, {opacity: 1}, 'startDust+=2')
-.to('#arrow-base', 0.5, {opacity: 1}, 'startDust+=2.5')
-.to(['#sign-base', '#over-base'], 0.5, {opacity: 1}, 'startDust+=3')
-.add(function(){glowSignTL.play()}, 'startDust+=3.5')
-.add(function(){glowArrowTL.play()}, 'startDust+=4')
+//.to('#neonfade', 0.5, {opacity:0})
 
-// NEON CAMERA
-
-.to('#neon', 2, {scale:1, ease: Back.easeOut.config(4)}, 'startDust+=0.5')
-.to('#neon', 2, {scale:1.2, ease: Back.easeOut.config(4)})
-.to('#neon', 1, {scale:1, ease: Back.easeOut.config(4)})
-.add(function(){cameraJiggle.pause()}, 'endNeon')
-.to('#neon', 1, {rotation: -20, x: -800, y: 300, ease: Power3.easeIn})
-.add('endNeon')
+.add(function(){neonScaleTL.play()})
+.add(function(){overTL.play()})
+.add(function(){hereTL.play()}, '+=1')
+.to(['#sign-base', '#over-base'], 0.5, {opacity: 1}, '+=2')
+.add(function(){glowSignTL.play()}, '+=0.5')
+.add(function(){linesTL.play()})
+.to('#glow-lines', 0.2, {opacity: 1})
+.to(['#sign-base'], 0.2, {opacity: 1}, '+=0.2')
+.add(function(){glowArrowTL.play()})
+.to('#arrow-base', 0.2, {opacity: 1}, '+=0.5')
+.staggerTo(['#land', '#mountains'], 0.8, {opacity:1}, 0.2, '+=0.5')
+.to('#clouds1', 0.5, {opacity:0.3}, '+=0.5');
 ;
 
+mainTL
+.add(function(){neonAppearTL.play()})
+
+// JIGGLECAM
+
+.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, '+=7')
+.to('#landscape', 0.3, {scale:1.8, y:-200, ease: Linear.easeNone}, '-=0.6')
+//.add(function(){cameraJiggle.play()})
+.to(['#neon'], 0.5, {scale: 1.3, rotation: -4}, '+=0.6')
+.to(['#landscape'], 0.5, {scale: 2, rotation: -4}, '-=0.5')
+.to('#neon', 0.5, {scale: 1, rotation: 0}, '+=0.6')
+.to('#landscape', 0.5, {scale: 1.8, rotation: 0}, '-=0.5')
+
+// TRANSITION NEON -> BALLOONS
+
+.add(function(){cameraJiggle.pause()})
+.add(function(){cloudBG.pause()})
+
+.to('#neon', 2, {transformOrigin: '100% 50%', x: -800, y: 50, rotation: -5, ease: Power4.easeIn}, 'fallOff')
+.to('#landscape', 3, {transformOrigin: '100% 50%', x: -1300, y: 200, rotation: -5, ease: Power3.easeIn}, 'fallOff')
+
+.to('#clouds1', 3, {transformOrigin: '100% 0%', x: -4000, y: 300, scale: 2, rotation: -45, ease: Power3.easeIn}, 'fallOff')
+;
+
+// CLOUDS/STARS
+
+var cloudGroups = selectAll('.cloudGroup');
+
+TweenMax.set(cloudGroups, {
+    y: -600,
+    x: 700,
+    rotation: 45,
+    transformOrigin: 'center center',
+    opacity: 0.3
+});
+TweenMax.set(cloudGroups[1], {
+    scale: 3
+});
+
+
+var speedline = select('#speedline');
+var singleStar = select('#single-star');
+var clouds = selectAll('.cloudGroup path');
+
+var speedClouds = true;
+
+// Thanks to Chris Gannon
+
+function passThing() {
+
+    if (speedClouds) {
+        // set the starting position of speedline at random x and y value
+
+        TweenMax.fromTo(speedline, 0.4, {
+            x: 0,
+            y: randMinMax(-800, 400)
+        }, {
+            x: -800,
+            y: '+=800',
+            onComplete: passThing,
+            ease: Power0.easeNone
+        });
+        TweenMax.fromTo(singleStar, 0.5, {
+            x: 0,
+            y: randMinMax(-800, 400)
+        }, {
+            x: -800,
+            y: '+=800',
+            onComplete: passThing,
+            ease: Power0.easeNone
+        });
+
+        var cloudNum = randMinMax(0,11,true);
+        var thisCloud = clouds[cloudNum];
+
+        TweenMax.fromTo(thisCloud, 0.5, {
+            y:0
+        }, {
+            y: 1800,
+            onComplete: passThing,
+            ease: Power0.easeNone
+        }, 1);
+    }
+};
+
+mainTL
+.add(function(){passThing()});
 
 
 // BALLOONS ANIMATION (PAUSED)
@@ -452,14 +550,12 @@ TweenMax.staggerTo(bl, 1, {
 
 // ANIMATE IN
 
-var aBalloons = new TimelineMax({paused: true});
-
 var aYou = new TimelineMax();
 var aMade = new TimelineMax();
 var aIt = new TimelineMax();
 
 aYou
-.call(toggleClouds)
+//.call(toggleClouds)
 .set([You, Made], {
     y: 800,
     x: -100,
@@ -557,7 +653,7 @@ aIt
     scaleY: 0.7,
     ease: Back.easeInOut
 })
-.call(toggleClouds)
+//.call(toggleClouds)
 .call(function(){
     blYou.kill();
     blMade.kill();
@@ -565,83 +661,56 @@ aIt
 })
 ;
 
+var aBalloons = new TimelineMax({paused: true, onComplete: continueMainTL});
+
+function continueMainTL(){mainTL.play();}
+
 aBalloons.add(aYou, 0).add(aMade, 1.5).add(aIt, 4);
-
-// -----------------------------------
-
-
-// CLOUD ANIMATION (PAUSED)
-
-TweenMax.set(cloudGroup[0], {rotation: 45, y:-400, x: 600});
-TweenMax.set(cloudGroup[1], {rotation: 45, y:-400, x: 600, scale: 2, opacity: 0.5});
-
-var tapOn = false,
-  cloudsTL = new TimelineMax();
-
-var now = performance.now.bind(performance);
-var ease = Power0.easeOut;
-var cache = [];
-var last = now();
-var numClouds = cloud.length;
-var frequency = 500;
-//console.log(numClouds);
-
-for (var i = 0; i < numClouds; i++) {
-  createParticle();
-}
-
-function createParticle() {
-
-//  var x = [-800, -600, -200, -100, 0, 100, 200, 300];
-var particle = cloud[i];
-
-  var tl = new TimelineLite({ paused: true, onComplete: onComplete })
-  .set(particle, { autoAlpha: 1 })
-    .to(particle, 1, { /*x: x[i],*/ y: 1300, ease: ease, scale: 2 })
-    .to({}, 2, {}); // Just a delay so it will sit at the bottom before restarting
-
-  function onComplete() {
-    TweenMax.set(particle, { autoAlpha: 0 });
-    tl.pause();
-    cache.push(tl);
-  }
-
-  cache.push(tl);
-}
-
-
-function toggleClouds() {
-  tapOn = !tapOn;
-  if (tapOn) {
-
-    TweenMax.ticker.addEventListener("tick", emit); // the ticker is  a Greensock object http://greensock.com/?class_element=js-tweenMax-target
-
-  } else {
-
-    TweenMax.ticker.removeEventListener("tick", emit);
-  }
-};
-
-function emit() {
-
-  var current = now();
-  var elapsed = current - last;
-
-  if (elapsed > frequency) {
-
-    var tween = cache.shift(); // removes first item in cache array
-
-    tween && tween.play(0);
-    last = current;
-  }
-};
 
 
 // START BALLOONS
 
-mainTL.add(function(){aBalloons.play()});
+mainTL
+.add(function(){aBalloons.play()})
+.add(function(){mainTL.pause()})
+;
+
+
+// THANKS FOR COMING
+
+// SET FADEBOX TO BE INVISIBLE
+
+TweenMax.set('#fadebox', {opacity:0});
+
+// setup
+
+TweenMax.set(['#thanks', '#for', '#coming'], {opacity:0});
+
+TweenMax.set('#stars-big', {
+    x: -200,
+    y: -100,
+    transformOrigin: 'center center'
+});
+TweenMax.set('#stars-small', {
+    x: -200,
+    y: -10,
+    transformOrigin: 'center center',
+//    opacity: 0.7
+});
+
+function changeSC(){
+    speedClouds = false;
+}
+
+mainTL
+.to('#fadebox', 4, {opacity: 1}, 'fadeIn')
+.call(changeSC) // had trouble calling this as first thing in timeline replay... hmmm...
+//.from(['#for', '#coming'], 1, {opacity:0})
+.from('#stars-big', 4, {x:1000, y:-1000}, 'fadeIn')
+.from('#stars-small', 4, {x:800, y:-800}, 'fadeIn')
+;
 
 
 // FOR TESTING
 
-mainTL.play(0);
+mainTL.play(8);
