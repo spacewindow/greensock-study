@@ -166,7 +166,6 @@ var linesTL = new TimelineMax({repeat: -1}),
     glowArrowTL = new TimelineMax({repeat: -1,  delay: 0.8})
     overTL = new TimelineMax({repeat: -1})
     neonCamera = new TimelineMax({paused: true})
-    cameraJiggle = new TimelineMax({paused: true, repeat: -1, yoyo:true})
     ;
 
 linesTL
@@ -250,6 +249,8 @@ overTL
 ;
 
 // NEON CAMERA...
+
+var cameraJiggle = new TimelineMax({paused: true, repeat: -1, yoyo:true})
 
 cameraJiggle
 .to('#neon', 0.5, {x:10, y:5})
@@ -643,9 +644,4 @@ mainTL.add(function(){aBalloons.play()});
 
 // FOR TESTING
 
-mainTL.pause(0.3);
-
-
-
-
-
+mainTL.play(0);
