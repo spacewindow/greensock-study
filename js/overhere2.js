@@ -25,59 +25,104 @@ var cloudBG = new TimelineMax();
 
 cloudBG.to('#clouds1', 30, {xPercent: -30, ease: ease});
 
-var hTL = new TimelineMax();
-
 TweenMax.set('#neon', {transformOrigin: 'center center', scale: 1});
 TweenMax.set('#land', {transformOrigin: 'center top', scale: 2, y: 110});
 TweenMax.set('#mountains', {transformOrigin: 'center center', scale: 1.3, y:120});
 
+var hTL = new TimelineMax();
+
 hTL
-.fromTo('#neon', 10, {x:200}, {x:-200, ease: ease}, 'start')
-.fromTo('#land', 10, {x:0}, {x:-100, ease: ease}, 'start')
-.fromTo('#mountains', 10, {x:0}, {x:-100, ease: ease}, 'start')
+.fromTo('#neon', 16, {x:200}, {x:-200, ease: ease}, 'start')
+.fromTo('#land', 16, {x:0}, {x:-100, ease: ease}, 'start')
+.fromTo('#mountains', 16, {x:0}, {x:-100, ease: ease}, 'start')
 ;
 
-hTL.pause(0);
+var vTL = new TimelineMax();
 
+vTL
+.fromTo('#neon', 10, {yPercent:-5}, {yPercent: 5, ease: ease}, 'start')
+.fromTo('#land', 10, {yPercent:0}, {yPercent: 0, ease: ease}, 'start')
+.fromTo('#mountains',10, {yPercent:0}, {yPercent: -30, ease: ease}, 'start')
+;
 
-//var vTL = new TimelineMax();
-//
-//vTL
-//.fromTo('#neon', 4, {yPercent:-5}, {yPercent: 20, ease: ease}, 'start')
-//.fromTo('#land', 4, {yPercent:-10}, {yPercent: 0, ease: ease}, 'start')
-//.fromTo('#moutains', 4, {yPercent:-10}, {yPercent: -10, ease: ease}, 'start')
-//;
-//
-//vTL.pause(0);
+vTL.pause(8);
+hTL.pause(8);
 
-var camTL = new TimelineMax({delay: 2});
+var camTL = new TimelineMax({repeat:-1, paused:true});
 
 // CRAZY CAMERA MOVES
 
-//camTL
+camTL
+//1
+.add(function(){
+    vTL.play()
+})
+//2
+.add(function(){
+    vTL.reverse();
+    hTL.reverse();
+}, '+=0.3')
+//3
+.add(function(){
+    vTL.pause();
+    hTL.play();
+}, '+=0.2')
+//4
+.add(function(){
+    vTL.reverse();
+}, '+=0.3')
+//5
+.add(function(){
+    vTL.pause();
+    hTL.reverse();
+}, '+=0.2')
+//6
+.add(function(){
+    vTL.pause();
+    hTL.reverse();
+}, '+=0.3')
+//7
+.add(function(){
+    vTL.play();
+    hTL.play();
+}, '+=0.2')
+//8
+.add(function(){
+    vTL.pause();
+    hTL.play();
+}, '+=0.1')
+//9
+.add(function(){
+    vTL.play();
+    hTL.pause();
+}, '+=0.1')
+//10
+.add(function(){
+    vTL.pause();
+    hTL.play();
+}, '+=0.1')
+//finish
+.add(function(){
+    hTL.pause()
+}, '+=0.1');
+
+
+// ZOOM
+
+var zoomTL = new TimelineMax();
+
+zoomTL
+.set('#neon', {scale: 0.4})
+//.to('#neon', 0.2, {scale: 1.1}, 3)
 //.add(function(){
-//    hTL.play()
-//}, 0)
+//    camTL.play();
+//})
+//.to('#neon', 0.2, {scale: 1}, 5)
 //.add(function(){
-//    hTL.reverse()
-//}, 0.5)
-//.add(function(){
-//    vTL.play()
-//}, 1)
-//.add(function(){
-//    vTL.reverse()
-//}, 1)
-//.to('#neon', 0.5, {scale: 1.1})
-//.add(function(){
-//    vTL.pause()
-//}, 2)
-//.add(function(){
-//    hTL.play()
-//}, 2.5)
-//.add(function(){
-//    hTL.pause()
-//}, 3)
-//;
+//    camTL.pause();
+//}, '+=2')
+
+;
 
 // SET UP NEON TIMELINES
 
@@ -99,7 +144,6 @@ var linesTL = new TimelineMax({repeat: -1}),
     glowArrowTL = new TimelineMax({repeat: -1,  delay: 0.8})
     overTL = new TimelineMax({repeat: -1})
     neonCamera = new TimelineMax({paused: true})
-    cameraJiggle = new TimelineMax({paused: true, repeat: -1, yoyo:true})
     ;
 
 linesTL
@@ -189,7 +233,6 @@ hereTL.pause(0);
 glowSignTL.pause(0);
 glowArrowTL.pause(0);
 overTL.pause(0)
-//cameraJiggle.pause(0);
 
 var mainTL = new TimelineMax();
 
@@ -197,8 +240,11 @@ mainTL
 
 // HIDE SIGN ELEMENTS FOR REVEAL
 
-.set(['#glow-lines', '#sign-base', '#arrow-base', '#over-base'], {opacity: 0}, 'startDust')
-//.set('#neon', {scale: 0.4, transformOrigin: 'center center'}, 'startDust')
+// temp!!!!!!!
+
+.set(['#glow-lines', '#sign-base', '#arrow-base', '#over-base', '#land', '#mountains', '#clouds1'], {opacity: 0}, 'startDust')
+
+.set('#neonfade', {opacity:0})
 
 // REMOVE NEON BLACKOUT
 
@@ -206,12 +252,15 @@ mainTL
 
 // START NEON ELEMENT TIMELINES
 
+.to('#neon', 8, {scale: 0.5}, 'startDust')
+
 .add(function(){overTL.play()}, 'startDust')
 .add(function(){hereTL.play()}, 'startDust+=1')
 .add(function(){linesTL.play()}, 'startDust+=2')
 .to('#glow-lines', 0.5, {opacity: 1}, 'startDust+=2')
-.to(['#sign-base', '#over-base'], 0.5, {opacity: 1}, 'startDust+=2.5')
 .to('#arrow-base', 0.5, {opacity: 1}, 'startDust+=3')
-.add(function(){glowSignTL.play()}, 'startDust+=3.5')
-.add(function(){glowArrowTL.play()}, 'startDust+=4');
+.to(['#sign-base', '#over-base'], 0.5, {opacity: 1}, 'startDust+=3.5')
+.add(function(){glowSignTL.play()}, 'startDust+=4')
+.add(function(){glowArrowTL.play()}, 'startDust+=4.5')
+.staggerTo(['#land', '#mountains', '#clouds1'], 0.5, {opacity:1}, 0.5 );
 
