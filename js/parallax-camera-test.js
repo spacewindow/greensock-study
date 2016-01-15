@@ -113,14 +113,14 @@ var zoomTL = new TimelineMax();
 
 zoomTL
 .set('#neon', {scale: 0.4})
-//.to('#neon', 0.2, {scale: 1.1}, 3)
-//.add(function(){
-//    camTL.play();
-//})
-//.to('#neon', 0.2, {scale: 1}, 5)
-//.add(function(){
-//    camTL.pause();
-//}, '+=2')
+.to('#neon', 0.2, {scale: 1.1}, 3)
+.add(function(){
+    camTL.play();
+})
+.to('#neon', 0.2, {scale: 1}, 5)
+.add(function(){
+    camTL.pause();
+}, '+=2')
 
 ;
 

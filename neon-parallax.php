@@ -10,7 +10,7 @@
 
 <script src="js/TweenMax.min.js"></script>
 
-<script src="js/overhere2.js"></script>
+<script src="js/parallax-camera-test.js"></script>
 
 	</body>
 </html>

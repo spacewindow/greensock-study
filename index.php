@@ -1,1 +1,1 @@
-<?php include('neon.php');?>
+<?php include('neon-parallax.php');?>
