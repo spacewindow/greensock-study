@@ -1,35 +1,23 @@
-// SETUP LANDSCAPE
+// CAMERA SHAKE
 
-TweenMax.set('#landscape', {x:-200});
+var cameraShake = new TimelineMax({paused: true, repeat: -1, yoyo:true})
 
-TweenMax.set('#clouds1', {autoAlpha: 0.2});
-var ease = Linear.easeNone;
-
-var cloudBG = new TimelineMax();
-
-cloudBG.to('#clouds1', 50, {xPercent: -30, ease: ease});
-
-TweenMax.set('#neon', {transformOrigin: 'center center', scale: 0.4});
-
-var cameraJiggle = new TimelineMax({paused: true, repeat: -1, yoyo:true})
-
-cameraJiggle
+cameraShake
 .to(['#neon', '#landscape'], 0.5, {x:10, y:5})
 .to(['#neon', '#landscape'], 0.5, {x:-6, y:-10})
 .to(['#neon', '#landscape'], 0.5, {x:4, y:-2})
 .to(['#neon', '#landscape'], 0.5, {x:-8, y:4})
 ;
 
-
 // SET UP NEON TIMELINES
 
 var
-    glowLines = selectAll('.line'),
-    here = select('.here'),
-    o = select('.o'),
-    ver = select('.ver'),
-    glowArrow = select('.glow-arrow'),
-    glowSign = select('#glow-sign'),
+    glowLines = selectAll('#glow-lines line'),
+    here = select('#here'),
+    o = select('#o'),
+    ver = select('#ver'),
+    glowArrow = select('#glow-arrow'),
+    glowSign = select('#glow-base'),
     signBase = select('#neon-base')
     ;
 
@@ -94,16 +82,19 @@ glowArrowTL
     autoAlpha: 0,
 })
 .to(glowArrow,0.1,{
-    delay: 0.2,
     autoAlpha: 1
 })
 .to(glowArrow, 0.1, {
-    delay: 2,
     autoAlpha: 0
 })
 .to(glowArrow, 0.1, {
     autoAlpha: 1
-});
+})
+.to(glowArrow, 0.1, {
+    delay: 1.5,
+    autoAlpha: 0
+})
+.to({}, 1, {});
 
 
 overTL
@@ -126,10 +117,6 @@ overTL
 })
 ;
 
-neonScaleTL
-.to('#neon', 8, {scale:0.5});
-
-// NEON CAMERA...
 
 linesTL.pause(0);
 hereTL.pause(0);
@@ -138,46 +125,78 @@ glowArrowTL.pause(0);
 overTL.pause(0);
 neonScaleTL.pause(0);
 
+// NEON SCALE TL
+
+TweenMax.set('#neon', {transformOrigin: 'center center', scale: 0.4});
+
+TweenMax.set('#landscape',  {transformOrigin: '400 200', smoothOrigin:true, scale: 0.4});
+
+TweenMax.set('#landscape-clouds',  {transformOrigin: '400 200'});
+
+neonScaleTL
+.to('#neon', 8, {scale:0.6});
+
+//  NEON APPEARANCE SEQUENCE
+
 var neonAppearTL = new TimelineMax({paused:true});
-
-
-
 
 // HIDE SIGN ELEMENTS FOR REVEAL
 
- TweenMax.set(['#glow-lines', '#neon-base', '#arrow-base', '#over-base', '#land', '#mountains', '#clouds1'], {autoAlpha: 0})
+TweenMax.set(['#glow-lines', '#neon-base', '#arrow-base', '#over-base', '#landscape', '#landscape-clouds'], {autoAlpha: 0})
 
 neonAppearTL
-
-
-// START NEON ELEMENT TIMELINES
-
-//.to('#neonfade', 0.5, {autoAlpha:0})
 
 .add(function(){neonScaleTL.play()})
 .add(function(){overTL.play()})
 .add(function(){hereTL.play()}, '+=1')
 .to(['#neon-base', '#over-base'], 0.5, {autoAlpha: 1}, '+=2')
 .add(function(){glowSignTL.play()}, '+=0.5')
-.add(function(){linesTL.play()})
-.to('#glow-lines', 0.2, {autoAlpha: 1})
-.to(['#neon-base'], 0.2, {autoAlpha: 1}, '+=0.2')
+.to(['#neon-base'], 0.2, {autoAlpha: 1}, '+=0.5')
+.to('#arrow-base', 0.2, {autoAlpha: 1}, '+=1')
 .add(function(){glowArrowTL.play()})
-.to('#arrow-base', 0.2, {autoAlpha: 1}, '+=0.5')
+.add(function(){linesTL.play()})
+.to('#glow-lines', 2, {autoAlpha: 1}, '+=1')
 .staggerTo(['#land', '#mountains'], 0.8, {autoAlpha:1}, 0.2)
 .to('#clouds1', 0.5, {autoAlpha:0.3});
 ;
 
+// SET CLOUDS
+
+var cloudsBG = new TimelineMax({paused:true});
+
+cloudsBG
+.to('#landscape-clouds', 10, {xPercent:-15, ease: Linear.easeNone})
+
 mainTL
 .add(function(){neonAppearTL.play()}, 'startDust+=0.5')
 
-// JIGGLECAM
+// ShakeCAM
 
-.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, '+=7')
-.to('#landscape', 0.3, {scale:1.8, y:-200, ease: Linear.easeNone}, '-=0.6')
-//.add(function(){cameraJiggle.play()})
-.to(['#neon'], 0.5, {scale: 1.3, rotation: -4}, '+=0.6')
-.to(['#landscape'], 0.5, {scale: 2, rotation: -4}, '-=0.5')
-.to('#neon', 0.5, {scale: 1, rotation: 0}, '+=0.6')
-.to('#landscape', 0.5, {scale: 1.8, rotation: 0}, '-=0.5')
+.add('zoom', '+=9')
+
+.to('#landscape', 0.3, {scale:1.8, yPercent:5, ease: Back.easeInOut}, 'zoom')
+.add(function(){cameraShake.play()}, 'zoom')
+.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, 'zoom')
+
+.to('#landscape', 0.5, {autoAlpha:1}, 'zoom+=0.5')
+.to('#landscape-clouds', 0.4, {autoAlpha:0.3}, 'zoom+=0.5')
+.add(function(){cloudsBG.play()}, 'zoom+=0.5')
+
+.to('#neon', 0.5, {scale: 1.3, rotation: -4}, 'zoom+=2')
+.to('#landscape', 0.5, {scale: 1.3, rotation: -4, yPercent: 20, xPercent: -5}, 'zoom+=2')
+.to('#landscape-clouds', 0.5, {scale: 0.8, rotation: -4, xPercent:-2}, 'zoom+=2')
+
+.to('#neon', 0.5, {scale: 0.9, rotation: 0, yPercent: 5}, 'zoom+=3.5')
+.to('#landscape', 0.5, {scale: 1, rotation: 0, yPercent:-2 }, 'zoom+=3.5')
+.to('#landscape-clouds', 0.5, {scale: 1, rotation: 0},'zoom+=3.5')
+;
+
+mainTL
+.add(function(){cameraShake.pause()})
+.add(function(){cloudsBG.pause()})
+.add('falloff')
+
+.to('#landscape', 3, {xPercent: -100, yPercent: 90, ease: Power4.easeIn}, 'falloff')
+.set('#landscape-clouds', {transformOrigin:'90% 50%', smoothOrigin: false}, 'falloff')
+.to('#landscape-clouds', 3, {xPercent: -100, rotation: -20, ease: Power4.easeIn}, 'falloff+=0.1')
 ;

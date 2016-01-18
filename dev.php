@@ -8,17 +8,35 @@
 
 
 
-    <?php include('images/svg-background.svg'); ?>
+    <?php
+        include('images/svg-background.svg');
+    ?>
 
-    <?php include('images/svg-clouds.svg'); ?>
-    <?php include('images/svg-balloons.svg'); ?>
-    <?php include('images/svg-clouds.svg'); ?>
+    <?php
+        include('images/svg-clouds.svg');
+    ?>
+    <?php
+        include('images/svg-balloons.svg');
+    ?>
+    <?php
+        include('images/svg-clouds2.svg');
+    ?>
 
-    <?php include('images/svg-neon.svg'); ?>
-    <?php include('images/svg-heybox.svg'); ?>
-    <?php include('images/svg-arm.svg'); ?>
-    <?php include('images/svg-thanks.svg'); ?>
-    <?php include('images/svg-grain.svg'); ?>
+    <?php
+        include('images/svg-neon.svg');
+    ?>
+    <?php
+//        include('images/svg-heybox.svg');
+    ?>
+    <?php
+//        include('images/svg-arm.svg');
+    ?>
+    <?php
+        include('images/svg-thanks.svg');
+    ?>
+    <?php
+        include('images/svg-grain.svg');
+    ?>
 
 <!--CONTROLS-->
 
@@ -39,15 +57,13 @@
 
 <!-- TIMELINES-->
 <script src="js/setup.js"></script>
-<script src="js/1-hand.js"></script>
-<script src="js/2-label.js"></script>
-<script src="js/3-collapse.js"></script>
+<!--<script src="js/1-hand.js"></script>-->
+<!--<script src="js/2-label.js"></script>-->
+<!--<script src="js/3-collapse.js"></script>-->
 <script src="js/4-neon.js"></script>
 <script src="js/5-clouds.js"></script>
 <script src="js/6-balloons.js"></script>
 <script src="js/7-stars.js"></script>
-
-<!--<script src="js/final.js"></script>-->
 
 <!--CONTROLS JS-->
 

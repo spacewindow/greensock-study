@@ -1,84 +1,104 @@
-// CLOUDS
+// SETUP CLOUDS
 
-mainTL
+// in Illlustrator create one main guide as an ellipse which fills the entire stage. Makes it easy to get the center point.
 
-.add(function(){cameraJiggle.pause()})
-.add(function(){cloudBG.pause()})
+function positionIt(guide, target){
 
-.to('#neon', 2, {transformOrigin: '100% 50%', x: -800, y: 50, rotation: -5, ease: Power4.easeIn}, 'fallOff')
-.to('#landscape', 3, {transformOrigin: '100% 50%', x: -1300, y: 200, rotation: -5, ease: Power3.easeIn}, 'fallOff')
+    var mainGuide = document.getElementById(guide),
+        allGuides = document.querySelectorAll("[id*='" + guide + "']"),
+        thisTarget = document.getElementById(target),
 
-.to('#clouds1', 3, {transformOrigin: 'center top', x: -4000, y: 300, scale: 2, rotation: -45, ease: Power3.easeIn}, 'fallOff')
-;
+        // get Guide x and y offset
+        boundsG = mainGuide.getBBox(),
+        x = boundsG.x,
+        y = boundsG.y;
 
-// CLOUDS/STARS
+    // get guide center
+    var cx = mainGuide.getAttribute('cx'),
+        cy = mainGuide.getAttribute('cy'),
+        newOrigin = cx + ' ' + cy;
 
-var cloudGroups = selectAll('.cloudGroup');
+    console.log(newOrigin);
 
-var speedline = select('#speedline');
-var singleStar = select('#single-star');
-var clouds = selectAll('.cloudGroup path');
-var numClouds = clouds.length
+    TweenMax.set(thisTarget, {
+        transformOrigin: newOrigin,
+        x:-x,
+        y:-y});
+    TweenMax.set(allGuides, {autoAlpha:0});
+}
 
-var speedClouds = true;
+positionIt('cGuide', 'cloudGroup01');
+positionIt('cGuide02', 'cloudGroup02');
 
-TweenMax.set(cloudGroups, {
-    y: -300,
-    x: 900,
-    transformOrigin: 'center center',
-});
-TweenMax.set(clouds, {
-    autoAlpha: 0.3
-});
-TweenMax.set(speedline, {
-    autoAlpha: 0.6
-});
-TweenMax.set(cloudGroups[1], {
-    scale: 3
-});
+var cloudGroups = ['#cloudGroup01', '#cloudGroup02'];
+var clouds = document.querySelectorAll("[id*='cloudGroup'] path");
+var numClouds = clouds.length;
+var cloudsOn = true;
 
-// Thanks to Chris Gannon
+TweenMax.set(clouds, {autoAlpha: 0.5});
+TweenMax.set(cloudGroups, {rotation:90});
 
-function passThing() {
-
-    if (speedClouds) {
-        // set the starting position of speedline at random x and y value
+// Thanks to Chris Gannon http://codepen.io/chrisgannon/pen/KVMMjR
 
 
-        TweenMax.fromTo(speedline, 0.4, {
-            x: randMinMax(-800, 400),
-            y:0
-        }, {
-//            x:0,
-            y: 800,
-            onComplete: passThing,
-            ease: Power0.easeNone
-        });
-        TweenMax.fromTo(singleStar, 0.5, {
-            x: randMinMax(-800, 400),
-            y:100
-        }, {
-//            x:0,
-            y: 1800,
-            onComplete: passThing,
-            ease: Power0.easeNone
-        });
+function passCloud() {
+
+    if (cloudsOn) {
 
         var cloudNum = randMinMax(0,(numClouds-1),true);
         var thisCloud = clouds[cloudNum];
 
-        TweenMax.fromTo(thisCloud, 0.5, {
+        TweenMax.fromTo(thisCloud, 0.3, {
             y:0
         }, {
-            y: 1800,
-            onComplete: passThing,
-            ease: Power0.easeNone
+            y: 2500,
+            onComplete: passCloud,
+            ease: Linear.easeNone
         }, 1);
     }
 };
 
+function passSpeed() {
+
+    if (cloudsOn) {
+
+        TweenMax.fromTo('#speedline', 0.4, {
+            x: randMinMax(-400, 400),
+            y:0
+        }, {
+            y: 2000,
+            onComplete: passSpeed,
+            ease: Linear.easeNone
+        });
+
+    }
+};
+
+function passStar() {
+
+    if (cloudsOn) {
+
+        TweenMax.fromTo('#single-star', 0.4, {
+            x: randMinMax(-400, 400),
+            y:0
+        }, {
+            y: 1600,
+            onComplete: passStar,
+            ease: Linear.easeNone
+        });
+
+    }
+};
+
 mainTL
-.fromTo(cloudGroups, 4, {rotation:70}, {rotation: 45, ease: Power4.easeIn}, 'fallOff+=3')
-.add(function(){passThing()}, 'fallOff+=3')
-.add('startBallons', 'fallOff+=6');
+.add(function(){
+    passCloud();
+    passSpeed();
+    passStar();
+}, 'falloff+=3')
+.to(cloudGroups, 3, {rotation: 45}, 'falloff+=3')
+.add('startBalloons', 'falloff+=6');
+
+
+
 

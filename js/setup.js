@@ -34,6 +34,8 @@ var updateSlider = function() {
 
 var mainTL = new TimelineMax({onUpdate: updateSlider});
 
+//var mainTL = new TimelineMax();
+
 // FILM GRAIN LOOP
 
 TweenMax.to('.grain', 0.3, {

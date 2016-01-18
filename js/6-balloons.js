@@ -210,10 +210,12 @@ aMade
 })
 .to(Made, 2, {
     delay: 1,
-    scale: 1.4
+    scale: 1.6,
+    y:-100,
+    x: 30
 })
 .to(Made, 2, {
-    delay: 2,
+    delay: 2.5,
     y: -600,
     x:900,
     rotation: 50,
@@ -235,8 +237,8 @@ aIt
     ease: Back.easeInOut
 })
 .to(It, 2, {
-    x:100,
-    y:100,
+    x:160,
+    y:300,
     scale: 1,
     ease: Back.easeInOut
 })
@@ -257,4 +259,10 @@ aIt
 })
 ;
 
-mainTL.add(aYou, 'startBalloons').add(aMade, 'startBalloons+=1.5').add(aIt, 'startBalloons+=4');
+mainTL
+.add(aYou, 'startBalloons')
+.add(aMade, 'startBalloons+=1.5')
+.add(aIt, 'startBalloons+=4')
+.add('stars', 'startBalloons+=12');
+
+mainTL.play(16);
