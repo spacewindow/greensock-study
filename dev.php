@@ -26,10 +26,10 @@
         include('images/svg-neon.svg');
     ?>
     <?php
-//        include('images/svg-heybox.svg');
+        include('images/svg-heybox.svg');
     ?>
     <?php
-//        include('images/svg-arm.svg');
+        include('images/svg-arm.svg');
     ?>
     <?php
         include('images/svg-thanks.svg');
@@ -57,9 +57,9 @@
 
 <!-- TIMELINES-->
 <script src="js/setup.js"></script>
-<!--<script src="js/1-hand.js"></script>-->
-<!--<script src="js/2-label.js"></script>-->
-<!--<script src="js/3-collapse.js"></script>-->
+<script src="js/1-hand.js"></script>
+<script src="js/2-label.js"></script>
+<script src="js/3-collapse.js"></script>
 <script src="js/4-neon.js"></script>
 <script src="js/5-clouds.js"></script>
 <script src="js/6-balloons.js"></script>

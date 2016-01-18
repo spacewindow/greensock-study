@@ -32,7 +32,13 @@ mainTL
 .from('#stars-small', 6, {x:800, y:-800, ease: Power3.easeOut}, 'stars')
 ;
 
-mainTL.play(15);
+mainTL
+.to('#stars-big', 5, {scale: 1.1, ease: Linear.easeNone}, 'stars+=2')
+.to('#stars-small', 5, {scale: 1.05 ,ease: Linear.easeNone}, 'stars+=2')
+.to(['#stars-small', '#stars-big'], 2.5, {autoAlpha:0, ease:Power3.easeIn}, "-=2.5")
+;
+
+mainTL.play(0);
 
 
 //

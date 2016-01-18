@@ -152,10 +152,10 @@ neonAppearTL
 .to(['#neon-base', '#over-base'], 0.5, {autoAlpha: 1}, '+=2')
 .add(function(){glowSignTL.play()}, '+=0.5')
 .to(['#neon-base'], 0.2, {autoAlpha: 1}, '+=0.5')
-.to('#arrow-base', 0.2, {autoAlpha: 1}, '+=1')
+.to('#arrow-base', 0.2, {autoAlpha: 1}, '+=0.2')
 .add(function(){glowArrowTL.play()})
 .add(function(){linesTL.play()})
-.to('#glow-lines', 2, {autoAlpha: 1}, '+=1')
+.to('#glow-lines', 2, {autoAlpha: 1}, '+=0.2')
 .staggerTo(['#land', '#mountains'], 0.8, {autoAlpha:1}, 0.2)
 .to('#clouds1', 0.5, {autoAlpha:0.3});
 ;
@@ -172,7 +172,7 @@ mainTL
 
 // ShakeCAM
 
-.add('zoom', '+=9')
+.add('zoom', '+=5')
 
 .to('#landscape', 0.3, {scale:1.8, yPercent:5, ease: Back.easeInOut}, 'zoom')
 .add(function(){cameraShake.play()}, 'zoom')
@@ -194,8 +194,9 @@ mainTL
 mainTL
 .add(function(){cameraShake.pause()})
 .add(function(){cloudsBG.pause()})
-.add('falloff')
+.add('falloff', '+=1')
 
+.to('#neon', 2, {x: -800, y:200, rotation: -3, ease: Power4.easeIn}, 'falloff')
 .to('#landscape', 3, {xPercent: -100, yPercent: 90, ease: Power4.easeIn}, 'falloff')
 .set('#landscape-clouds', {transformOrigin:'90% 50%', smoothOrigin: false}, 'falloff')
 .to('#landscape-clouds', 3, {xPercent: -100, rotation: -20, ease: Power4.easeIn}, 'falloff+=0.1')
