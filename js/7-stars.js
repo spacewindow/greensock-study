@@ -28,11 +28,11 @@ mainTL
 .to('#fadebox', 4, {autoAlpha: 1}, 'stars')
 .call(changeSC) // had trouble calling this as first thing in timeline replay... hmmm...
 //.from(['#for', '#coming'], 1, {autoAlpha:0})
-.from('#stars-big', 4, {x:1000, y:-1000}, 'stars')
-.from('#stars-small', 4, {x:800, y:-800}, 'stars')
+.from('#stars-big', 6, {x:1000, y:-1000, ease: Power3.easeOut}, 'stars')
+.from('#stars-small', 6, {x:800, y:-800, ease: Power3.easeOut}, 'stars')
 ;
 
-mainTL.play(16);
+mainTL.play(15);
 
 
 //

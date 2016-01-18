@@ -59,21 +59,21 @@ var blCreate = function() {
         // STRING LOOP
 
         stringTL
-        .to(string, 1, {
+        .to(string, 0.8, {
             morphSVG: '#string2',
-            ease: Power0.easeInOut,
+            ease: Linear.easeNone,
         }, 'stringStart')
-        .to(string, 1, {
+        .to(string, 0.8, {
             morphSVG: '#string3',
-            ease: Power0.easeInOut,
+            ease: Linear.easeNone,
         })
-        .to(string, 1, {
+        .to(string, 0.8, {
             morphSVG: '#string4',
-            ease: Power0.easeInOut,
+            ease: Linear.easeNone,
         })
-        .to(string, 1, {
+        .to(string, 0.8, {
             morphSVG: '#string1',
-            ease: Power0.easeInOut,
+            ease: Linear.easeNone,
         })
         ;
 
@@ -117,7 +117,7 @@ var blCreate = function() {
             ease: Power1.easeInOut,
         });
 
-        this[tlName].add(wordTL, 0).add(stringTL, 0).add(stringRotate, 0).add(knotTL, 3);
+        this[tlName].add(wordTL, 0).add(stringTL, 2).add(stringRotate, 0).add(knotTL, 3);
 
     }
 }
@@ -264,5 +264,3 @@ mainTL
 .add(aMade, 'startBalloons+=1.5')
 .add(aIt, 'startBalloons+=4')
 .add('stars', 'startBalloons+=12');
-
-mainTL.play(16);

@@ -35,8 +35,8 @@ var clouds = document.querySelectorAll("[id*='cloudGroup'] path");
 var numClouds = clouds.length;
 var cloudsOn = true;
 
-TweenMax.set(clouds, {autoAlpha: 0.5});
-TweenMax.set(cloudGroups, {rotation:90});
+TweenMax.set(clouds, {autoAlpha: 0.3});
+TweenMax.set(cloudGroups, {rotation:80});
 
 // Thanks to Chris Gannon http://codepen.io/chrisgannon/pen/KVMMjR
 
@@ -48,10 +48,10 @@ function passCloud() {
         var cloudNum = randMinMax(0,(numClouds-1),true);
         var thisCloud = clouds[cloudNum];
 
-        TweenMax.fromTo(thisCloud, 0.3, {
+        TweenMax.fromTo(thisCloud, 0.6, {
             y:0
         }, {
-            y: 2500,
+            y: 3000,
             onComplete: passCloud,
             ease: Linear.easeNone
         }, 1);
@@ -96,8 +96,8 @@ mainTL
     passSpeed();
     passStar();
 }, 'falloff+=3')
-.to(cloudGroups, 3, {rotation: 45}, 'falloff+=3')
-.add('startBalloons', 'falloff+=6');
+.to(cloudGroups, 4, {rotation: 45}, 'falloff+=3')
+.add('startBalloons');
 
 
 
