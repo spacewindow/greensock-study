@@ -27,18 +27,6 @@ var cloudGroups = selectAll('.cloudGroup');
 
 // STARS LOOP
 
-
-TweenMax.set('#stars-big', {
-    x: -200,
-    y: -100,
-    transformOrigin: 'center center'
-});
-TweenMax.set('#stars-small', {
-    x: -200,
-    y: -10,
-    transformOrigin: 'center center',
-    opacity: 0.7
-});
 TweenMax.set(cloudGroups, {
     y: -500,
     x: 400,
@@ -64,11 +52,10 @@ function passThing() {
         // set the starting position of speedline at random x and y value
 
         TweenMax.fromTo(speedline, 0.4, {
-            x: 0,
-            y: randMinMax(-800, 400)
+            y:0,
+            x: randMinMax(-800, 400)
         }, {
-            x: -800,
-            y: '+=800',
+            y: 1600,
             onComplete: passThing,
             ease: Power0.easeNone
         });
@@ -77,7 +64,7 @@ function passThing() {
             y: randMinMax(-800, 400)
         }, {
             x: -800,
-            y: '+=800',
+            y: 1800,
             onComplete: passThing,
             ease: Power0.easeNone
         });

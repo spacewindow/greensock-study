@@ -1,7 +1,3 @@
-CSSPlugin.useSVGTransformAttr = true;
-
-CSSPlugin.defaultTransformPerspective = 200;
-
 // RANDOM NUMBER MIN MAX - https://gist.github.com/timohausmann/4997906
 
 var randMinMax = function (t, n, a) {
@@ -713,4 +709,4 @@ mainTL
 
 // FOR TESTING
 
-mainTL.play(8);
+mainTL.play(0);

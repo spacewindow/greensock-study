@@ -91,25 +91,3 @@ TweenMax.staggerTo('.particle10', 0.5, {
     }
 }, 0.4);
 
-
-
-// FOR TESTING
-
-//mainTL.play();
-
-
-// CONTROLLER
-
-$("#slider").slider({
-  range: false,
-  min: 0,
-  max: 100,
-  step:.1,
-  slide: function ( event, ui ) {
-    mainTL.progress( ui.value / 100 ).pause();
-    }
-});
-
-function updateSlider() {
-  $("#slider").slider("value", mainTL.progress() *100);
-}

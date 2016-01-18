@@ -1,5 +1,7 @@
-svg * {
-  position: relative; }
+@font-face {
+  font-family: 'Museo';
+  src: url("../fonts/Museo.woff") format("woff");
+  font-style: normal; }
 
 svg {
   position: absolute;
@@ -9,7 +11,7 @@ svg {
 
 #controls {
   position: absolute;
-  top: 50%;
+  top: 500px;
   left: 50%;
   width: 310px;
   transform: translate(-50%, 120px); }

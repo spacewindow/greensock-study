@@ -1,0 +1,5 @@
+<svg id="svg-grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+
+<rect class="grain" width="800" height="800" fill="url(#grain)" />
+
+</svg>
