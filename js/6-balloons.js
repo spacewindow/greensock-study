@@ -30,7 +30,7 @@ var blCreate = function() {
     for (var i=0; i < bl.length; i++){
 
         var balloon = bl[i];
-        console.log(balloon);
+
 //        var tlName = balloon.parentNode.getID("class")
         var tlName = balloon.parentNode.id;
 
@@ -154,7 +154,7 @@ var aMade = new TimelineMax();
 var aIt = new TimelineMax();
 
 var YouString = You.querySelector("[id^=string]");
-console.log(YouString);
+
 
 aYou
 //.call(toggleClouds)
@@ -190,7 +190,7 @@ aYou
 .to({}, 5, {})
 .add(function(){
     bl_you.pause();
-    console.log('dead')
+
 })
 .to(YouString, 2, {
     morphSVG: '#morphstring3',
@@ -207,7 +207,7 @@ aYou
 ;
 
 var MadeString = Made.querySelector("[id^=string]");
-console.log(MadeString);
+
 
 aMade
 .call(function(){
@@ -234,7 +234,7 @@ aMade
 .to({}, 3, {})
 .add(function(){
     bl_made.pause();
-    console.log('dead')
+
 })
 .to(MadeString, 2, {
     morphSVG: '#morphstring3',
@@ -251,7 +251,7 @@ aMade
 ;
 
 var ItString = It.querySelector("[id^=string]");
-console.log(ItString);
+
 
 aIt
 .call(function(){
@@ -272,7 +272,7 @@ aIt
 .to({}, 4, {})
 .add(function(){
     bl_it.pause();
-    console.log('dead')
+
 })
 .to(ItString, 1.5, {
     morphSVG: '#morphstring1',
@@ -295,11 +295,10 @@ aIt
 ;
 
 mainTL
-.add('startBalloons')
 .add(aYou, 'startBalloons')
 .add(aMade, 'startBalloons+=1.5')
 .add(aIt, 'startBalloons+=4')
-.add('stars', '+=1');
+.add('stars');
 
 
-mainTL.play(0);
+

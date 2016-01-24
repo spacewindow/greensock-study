@@ -153,13 +153,12 @@ neonAppearTL
 .add(function(){neonScaleTL.play()})
 .add(function(){overTL.play()})
 .add(function(){hereTL.play()}, '+=1')
-.to(['#neon-base', '#over-base'], 0.5, {autoAlpha: 1}, '+=2')
-.add(function(){glowSignTL.play()}, '+=0.5')
-.to(['#neon-base'], 0.2, {autoAlpha: 1}, '+=0.5')
-.to('#arrow-base', 0.2, {autoAlpha: 1}, '+=0.2')
-.add(function(){glowArrowTL.play()})
+.add(function(){glowSignTL.play()}, '+=2')
+.add(function(){glowArrowTL.play()}, '+=0.5')
 .add(function(){linesTL.play()})
-.to('#glow-lines', 2, {autoAlpha: 1}, '+=0.2')
+.to('#glow-lines', 2, {autoAlpha: 1}, '+=0.3')
+.to('#arrow-base', 0.2, {autoAlpha: 1}, '+=1')
+.to(['#neon-base', '#over-base'], 0.2, {autoAlpha: 1}, '+=0.5')
 .staggerTo(['#land', '#mountains'], 0.8, {autoAlpha:1}, 0.2)
 .to('#clouds1', 0.5, {autoAlpha:0.3});
 ;
@@ -176,23 +175,23 @@ mainTL
 
 // ShakeCAM
 
-.add('zoom', '+=5')
+.add('zoom', '+=7')
 
 .to('#landscape', 0.3, {scale:1.8, yPercent:5, ease: Back.easeInOut}, 'zoom')
 .add(function(){cameraShake.play()}, 'zoom')
-.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, 'zoom')
+//.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, 'zoom')
 
 .to('#landscape', 0.5, {autoAlpha:1}, 'zoom+=0.5')
 .to('#landscape-clouds', 0.4, {autoAlpha:0.3}, 'zoom+=0.5')
 .add(function(){cloudsBG.play()}, 'zoom+=0.5')
 
-.to('#neon', 0.5, {scale: 1.3, rotation: -4}, 'zoom+=2')
-.to('#landscape', 0.5, {scale: 1.3, rotation: -4, yPercent: 20, xPercent: -5}, 'zoom+=2')
-.to('#landscape-clouds', 0.5, {scale: 0.8, rotation: -4, xPercent:-2}, 'zoom+=2')
+.to('#neon', 0.5, {scale: 1.3, rotation: -4}, 'zoom')
+.to('#landscape', 0.5, {scale: 1.3, rotation: -4, yPercent: 20, xPercent: -5}, 'zoom')
+.to('#landscape-clouds', 0.5, {scale: 0.8, rotation: -4, xPercent:-2}, 'zoom')
 
-.to('#neon', 0.5, {scale: 0.9, rotation: 0, yPercent: 5}, 'zoom+=3.5')
-.to('#landscape', 0.5, {scale: 1, rotation: 0, yPercent:-2 }, 'zoom+=3.5')
-.to('#landscape-clouds', 0.5, {scale: 1, rotation: 0},'zoom+=3.5')
+.to('#neon', 0.5, {scale: 0.9, rotation: 0, yPercent: 5}, 'zoom+=1')
+.to('#landscape', 0.5, {scale: 1, rotation: 0, yPercent:-2 }, 'zoom+=1')
+.to('#landscape-clouds', 0.5, {scale: 1, rotation: 0},'zoom+=1')
 ;
 
 mainTL
@@ -200,8 +199,7 @@ mainTL
 .add(function(){cloudsBG.pause()})
 .add('falloff', '+=1')
 
-.to('#neon', 2, {x: -800, y:200, rotation: -3, ease: Power4.easeIn}, 'falloff')
+.to('#neon', 2, {x: -800, /*y: 100,*/ ease: Power4.easeIn}, 'falloff')
 .to('#landscape', 3, {xPercent: -100, yPercent: 90, ease: Power4.easeIn}, 'falloff')
-.set('#landscape-clouds', {transformOrigin:'90% 50%', smoothOrigin: false}, 'falloff')
-.to('#landscape-clouds', 3, {xPercent: -100, rotation: -20, ease: Power4.easeIn}, 'falloff+=0.1')
+.to('#landscape-clouds', 3, {xPercent: -100, ease: Power4.easeIn}, 'falloff+=0.1')
 ;

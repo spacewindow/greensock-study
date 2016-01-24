@@ -15,12 +15,15 @@
     <?php
         include('images/svg-clouds.svg');
     ?>
+
+
     <?php
         include('images/svg-balloons.svg');
     ?>
     <?php
         include('images/svg-clouds2.svg');
     ?>
+
 
     <?php
         include('images/svg-neon.svg');
@@ -69,6 +72,7 @@
 <script src="js/5-clouds.js"></script>
 <script src="js/6-balloons.js"></script>
 <script src="js/7-stars.js"></script>
+<script src="js/control.js"></script>
 
 
 	</body>

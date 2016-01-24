@@ -13,6 +13,8 @@ function positionIt(guide, target){
         x = boundsG.x,
         y = boundsG.y;
 
+    console.log(thisTarget);
+
     // get guide center
     var cx = mainGuide.getAttribute('cx'),
         cy = mainGuide.getAttribute('cy'),
@@ -26,7 +28,7 @@ function positionIt(guide, target){
     TweenMax.set(mainGuide, {autoAlpha:0});
 }
 
-positionIt('cGuide', 'cloudGroup01');
+positionIt('cGuide01', 'cloudGroup01');
 positionIt('cGuide02', 'cloudGroup02');
 
 var cloudGroups = ['#cloudGroup01', '#cloudGroup02'];
@@ -35,7 +37,8 @@ var numClouds = clouds.length;
 var cloudsOn = true;
 
 TweenMax.set(clouds, {autoAlpha: 0.3});
-TweenMax.set(cloudGroups, {rotation:80});
+TweenMax.set(cloudGroups, {rotation:90});
+TweenMax.set('#speedline', {autoAlpha:0.5});
 
 // Thanks to Chris Gannon http://codepen.io/chrisgannon/pen/KVMMjR
 
@@ -94,10 +97,7 @@ mainTL
     passCloud();
     passSpeed();
     passStar();
-}, 'falloff+=3')
-.to(cloudGroups, 4, {rotation: 45}, 'falloff+=3')
+}, 'falloff+=2')
+.to(cloudGroups, 3, {rotation: 45}, 'falloff+=3')
 .add('startBalloons');
-
-
-
 

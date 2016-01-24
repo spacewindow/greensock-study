@@ -1,8 +1,5 @@
 <svg id="svg-thanks" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
 
-<rect id="fadebox" x="0" y="0" width="800" height="800" />
-
-
 <g id="stars-big">
 	<circle fill="#FFFFFF" cx="304.6" cy="131.2" r="2.5"/>
 	<circle fill="#FFFFFF" cx="318.6" cy="131.2" r="2.5"/>

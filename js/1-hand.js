@@ -39,4 +39,4 @@ mainTL
 
 ;
 
-mainTL.play(0);
+mainTL.pause(0);

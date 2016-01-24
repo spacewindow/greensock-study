@@ -1,8 +1,3 @@
-// THANKS FOR COMING
-
-// SET FADEBOX TO BE INVISIBLE
-
-TweenMax.set('#fadebox', {autoAlpha:0});
 
 // setup
 
@@ -25,7 +20,7 @@ function changeSC(){
 }
 
 mainTL
-.to('#fadebox', 4, {autoAlpha: 1}, 'stars')
+.to(cloudGroups, 3, {autoAlpha: 0}, 'stars')
 .call(changeSC) // had trouble calling this as first thing in timeline replay... hmmm...
 //.from(['#for', '#coming'], 1, {autoAlpha:0})
 .from('#stars-big', 6, {x:1000, y:-1000, ease: Power3.easeOut}, 'stars')
@@ -33,7 +28,7 @@ mainTL
 ;
 
 mainTL
-.to('#stars-big', 5, {scale: 1.1, ease: Linear.easeNone}, 'stars+=2')
-.to('#stars-small', 5, {scale: 1.05 ,ease: Linear.easeNone}, 'stars+=2')
-.to(['#stars-small', '#stars-big'], 2.5, {autoAlpha:0, ease:Power3.easeIn}, "-=2.5")
+.to('#stars-big', 10, {scale: 1.3, ease: Linear.easeNone}, 'stars+=2')
+.to('#stars-small', 10, {scale: 1.2 ,ease: Linear.easeNone}, 'stars+=2')
+.to(['#stars-small', '#stars-big'], 5, {autoAlpha:0, ease:Power3.easeIn}, 'stars+=5')
 ;

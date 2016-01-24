@@ -13,9 +13,7 @@ mainTL
 
 // SQUARE FALL
 
-.set('#bg1', {
-    autoAlpha: 0
-})
+.set('#bg', {fill: '#41395d'})
 
 .to('#squareleft', 2, {
     skewX: -12,
