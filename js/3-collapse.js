@@ -1,13 +1,22 @@
+TweenMax.set(['#heybox', '#squareleft', '#squareright', '#hey'], {
+        transformOrigin: 'center bottom',
+});
+TweenMax.set('#sign', {
+        transformOrigin: '70% 150%',
+});
+TweenMax.set(['#squareleft', '#squareright'], {
+    autoAlpha: 1
+});
+
+
 mainTL
 
 // SQUARE FALL
 
-.set(['#heybox', '#squareleft', '#squareright', '#hey'], {
-        transformOrigin: 'center bottom',
-    })
-.set(['#squareleft', '#squareright'], {
-    autoAlpha: 1
+.set('#bg1', {
+    autoAlpha: 0
 })
+
 .to('#squareleft', 2, {
     skewX: -12,
     ease: Power4.easeIn
@@ -20,11 +29,11 @@ mainTL
     scaleY: 0,
     ease: Power4.easeIn,
 }, 'squarefall')
-.to(['#hey'], 2, {
+/*.to(['#hey'], 2, {
     scaleX: 0.3,
     ease: Power4.easeIn,
-}, 'squarefall')
-.to(['#label' ], 2, {
+}, 'squarefall')*/
+.to(['#sign' ], 2, {
     scaleY: 0,
     scaleX: 0.7,
     ease: Power4.easeIn,

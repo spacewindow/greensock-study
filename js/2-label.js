@@ -1,11 +1,11 @@
 // SETUP LABEL
 
-TweenMax.set('#label', {transformOrigin: '70% 150%', autoAlpha:0});
-TweenMax.set('#label2', {x: -700});
+TweenMax.set('#label1', {transformOrigin: '70% 150%', autoAlpha:0});
+TweenMax.set('#label2', {x: -700, autoAlpha:0});
 
 mainTL
 
-.set('#label', {autoAlpha:1})
-.to('#label2', 0.75, {x: 1400, ease: Linear.easeNone}, 'startAnim')
-.to('#clipping', 0.5, {attr: {x: -650}, ease: Linear.easeNone}, 'startAnim')
+.set(['#label1', '#label2'], {autoAlpha:1})
+.to('#label2', 0.375, {x: 1400, ease: Linear.easeNone}, 'startAnim')
+.to('#labelClip', 0.25, {attr: {x: -650}, ease: Linear.easeNone}, 'startAnim')
 ;
