@@ -1,7 +1,9 @@
 
 // setup
+//
+//TweenMax.set(['#thanks', '#for', '#coming'], {autoAlpha:0});
 
-TweenMax.set(['#thanks', '#for', '#coming'], {autoAlpha:0});
+TweenMax.set('#replay', {autoAlpha:0})
 
 TweenMax.set('#stars-big', {
     x: -200,
@@ -30,5 +32,13 @@ mainTL
 mainTL
 .to('#stars-big', 10, {scale: 1.3, ease: Linear.easeNone}, 'stars+=2')
 .to('#stars-small', 10, {scale: 1.2 ,ease: Linear.easeNone}, 'stars+=2')
+.to('#replay', 0.7, {autoAlpha:1})
 .to(['#stars-small', '#stars-big'], 5, {autoAlpha:0, ease:Power3.easeIn}, 'stars+=5')
 ;
+
+
+
+$('#replay').click(function(){
+    mainTL.invalidate();
+    mainTL.restart();
+});

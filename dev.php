@@ -45,6 +45,9 @@
     <?php
         include('images/svg-grain.svg');
     ?>
+    <?php
+        include('images/svg-replay.svg');
+    ?>
 
 <!--CONTROLS-->
 
