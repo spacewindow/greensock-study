@@ -5,7 +5,7 @@
 function positionIt(guide, target){
 
     var mainGuide = document.getElementById(guide),
-        allGuides = document.querySelectorAll("[id*='" + guide + "']"),
+//        allGuides = document.querySelectorAll("[id*='" + guide + "']"),
         thisTarget = document.getElementById(target),
 
         // get Guide x and y offset
@@ -18,13 +18,12 @@ function positionIt(guide, target){
         cy = mainGuide.getAttribute('cy'),
         newOrigin = cx + ' ' + cy;
 
-    console.log(newOrigin);
-
     TweenMax.set(thisTarget, {
         transformOrigin: newOrigin,
         x:-x,
         y:-y});
-    TweenMax.set(allGuides, {autoAlpha:0});
+//    TweenMax.set(allGuides, {autoAlpha:0});
+    TweenMax.set(mainGuide, {autoAlpha:0});
 }
 
 positionIt('cGuide', 'cloudGroup01');

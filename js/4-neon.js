@@ -1,3 +1,7 @@
+// SETUP
+
+TweenMax.set('#svg-neon', {transformOrigin: '0 0', scale:3});
+
 // CAMERA SHAKE
 
 var cameraShake = new TimelineMax({paused: true, repeat: -1, yoyo:true})

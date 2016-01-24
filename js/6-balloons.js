@@ -1,12 +1,12 @@
 // BALLOONS ANIMATION (PAUSED)
 
 var
-    bl = selectAll('.bl'),
-    blwrap = selectAll('.blwrap'),
-    grain = select('.grain'),
-    You = select('#blYou'),
-    Made = select('#blMade'),
-    It = select('#blIt'),
+    blwrap = selectAll('[id*=bl-]'),
+    bl = selectAll('[id^=balloon]'),
+    string = selectAll('[id^=string]'),
+    You = select('#bl_you'),
+    Made = select('#bl_made'),
+    It = select('#bl_it'),
     cloud = selectAll('.cloud'),
     cloudGroup = selectAll('.cloudGroup')
     ;
@@ -17,10 +17,12 @@ var
 var aString = new TimelineMax({repeat: -1});
 var aKnot = new TimelineMax({repeat: -1});
 
+TweenMax.set('#morphstrings', {autoAlpha:0});
+
 
 //TweenMax.to(svg, 2, {attr:{viewBox: '0 0 400 400'}, repeat: -1, yoyo: true, ease:Linear.easeNone});
 
-//findShapeIndex(".blMadeLeft", ".blMadeRight");
+//findShapeIndex(".bl_madeLeft", ".bl_madeRight");
 
 
 var blCreate = function() {
@@ -28,6 +30,7 @@ var blCreate = function() {
     for (var i=0; i < bl.length; i++){
 
         var balloon = bl[i];
+        console.log(balloon);
 //        var tlName = balloon.parentNode.getID("class")
         var tlName = balloon.parentNode.id;
 
@@ -37,10 +40,10 @@ var blCreate = function() {
         var wordTL = new TimelineMax();
         var knotTL = new TimelineMax();
 
-        var string = balloon.getElementsByClassName("string")[0];
-        var word = balloon.getElementsByClassName("word")[0];
-        var wordright = balloon.getElementsByClassName("wordright")[0];
-        var knot = balloon.getElementsByClassName("knot")[0];
+        var string = balloon.querySelector("[id^=string]");
+        var word = balloon.querySelector("[id^=wordleft]");
+        var wordright = balloon.querySelector("[id^=wordright]");
+        var knot = balloon.querySelector("[id^=knot]");
 
         // WORD LOOP
 
@@ -59,21 +62,21 @@ var blCreate = function() {
         // STRING LOOP
 
         stringTL
-        .to(string, 0.8, {
-            morphSVG: '#string2',
-            ease: Linear.easeNone,
+        .to(string, 1.5, {
+            morphSVG: '#morphstring2',
+            ease: Power1.easeIn,
         }, 'stringStart')
-        .to(string, 0.8, {
-            morphSVG: '#string3',
-            ease: Linear.easeNone,
+        .to(string, 0.7, {
+            morphSVG: '#morphstring3',
+            ease: Power1.easeOut,
         })
-        .to(string, 0.8, {
-            morphSVG: '#string4',
-            ease: Linear.easeNone,
+        .to(string, 1.5, {
+            morphSVG: '#morphstring4',
+            ease: Power1.easeIn,
         })
-        .to(string, 0.8, {
-            morphSVG: '#string1',
-            ease: Linear.easeNone,
+        .to(string, 0.7, {
+            morphSVG: '#morphstring1',
+            ease: Power1.easeOut,
         })
         ;
 
@@ -98,35 +101,35 @@ var blCreate = function() {
             transformOrigin: '40% 20%',
             rotation: -10
         })
-        .to(bl, 3, {
+        .to(bl, 2.2, {
             yoyo: true,
             repeat: -1,
-            rotation: 10
+            rotation: 15,
+            ease: Power2.easeInOut
         });
 
         knotTL
         .set(knot, {
-            transformOrigin: '30% 20%',
-            rotation: 15,
+            transformOrigin: '40% 20%',
+            rotation: -10,
         })
-        .to(knot, 3, {
-            rotation: -15,
+        .to(knot, 2.2, {
+            rotation: 40,
             scaleY: 1.2,
             yoyo: true,
             repeat: -1,
-            ease: Power1.easeInOut,
+            ease: Power2.easeInOut,
         });
 
-        this[tlName].add(wordTL, 0).add(stringTL, 2).add(stringRotate, 0).add(knotTL, 3);
+        this[tlName].add(wordTL, 0).add(knotTL, 0.5).add(stringTL, 1.5)/*.add(stringRotate, 1)*/;
 
     }
 }
 
-blCreate(); // Creates 3 paused timelines: blYou, blMade, blIt
+blCreate(); // Creates 3 paused timelines: bl_you, bl-made, bl-it
 
 
 // BALLOON SIZE PULSE
-
 TweenMax.staggerTo(bl, 1.2, {
     scale: 1.06,
     repeat: -1,
@@ -150,6 +153,9 @@ var aYou = new TimelineMax();
 var aMade = new TimelineMax();
 var aIt = new TimelineMax();
 
+var YouString = You.querySelector("[id^=string]");
+console.log(YouString);
+
 aYou
 //.call(toggleClouds)
 .set([You, Made], {
@@ -163,7 +169,7 @@ aYou
     rotation: 10
 })
 .call(function(){
-    blYou.play(0)
+    bl_you.play(0)
 })
 .to(You, 2, {
     x:0,
@@ -181,20 +187,31 @@ aYou
     y: 0,
     ease: Back.easeInOut
 })
+.to({}, 5, {})
+.add(function(){
+    bl_you.pause();
+    console.log('dead')
+})
+.to(YouString, 2, {
+    morphSVG: '#morphstring3',
+    ease: Power1.easeIn,
+}, 'out')
 .to(You, 2, {
-    delay: 4,
     y: -600,
     x:900,
     rotation: 50,
     scaleX: 0.3,
     scaleY: 0.7,
     ease: Back.easeInOut
-})
+}, 'out')
 ;
+
+var MadeString = Made.querySelector("[id^=string]");
+console.log(MadeString);
 
 aMade
 .call(function(){
-    blMade.play(0)
+    bl_made.play(0)
 })
 .to(Made, 2, {
     x:0,
@@ -214,21 +231,31 @@ aMade
     y:-100,
     x: 30
 })
+.to({}, 3, {})
+.add(function(){
+    bl_made.pause();
+    console.log('dead')
+})
+.to(MadeString, 2, {
+    morphSVG: '#morphstring3',
+    ease: Power1.easeIn,
+}, 'out')
 .to(Made, 2, {
-    delay: 2.5,
     y: -600,
     x:900,
     rotation: 50,
     scaleX: 0.3,
     scaleY: 0.7,
     ease: Back.easeInOut
-})
+}, 'out')
 ;
 
+var ItString = It.querySelector("[id^=string]");
+console.log(ItString);
 
 aIt
 .call(function(){
-    blIt.play(0)
+    bl_it.play(0)
 })
 .to(It, 2, {
     x:200,
@@ -242,25 +269,37 @@ aIt
     scale: 1,
     ease: Back.easeInOut
 })
+.to({}, 4, {})
+.add(function(){
+    bl_it.pause();
+    console.log('dead')
+})
+.to(ItString, 1.5, {
+    morphSVG: '#morphstring1',
+    ease: Power3.easeIn,
+}, 'out')
 .to(It, 2.5, {
-    delay: 3,
     y: -600,
     x:900,
     rotation: 50,
     scaleX: 0.3,
     scaleY: 0.7,
     ease: Back.easeInOut
-})
+}, 'out+=0.3')
 //.call(toggleClouds)
 .call(function(){
-    blYou.kill();
-    blMade.kill();
-    blIt.kill();
+    bl_you.kill();
+    bl_made.kill();
+    bl_it.kill();
 })
 ;
 
 mainTL
+.add('startBalloons')
 .add(aYou, 'startBalloons')
 .add(aMade, 'startBalloons+=1.5')
 .add(aIt, 'startBalloons+=4')
-.add('stars', 'startBalloons+=12');
+.add('stars', '+=1');
+
+
+mainTL.play(0);

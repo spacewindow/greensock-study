@@ -17,5 +17,7 @@
       <circle id="_circle_" data-name="&lt;circle&gt;" cx="400" cy="-268.72" r="1.5" transform="translate(307.17 1071.49) rotate(-45)" fill="#fff"/>
     </g>
     <circle id="cGuide" cx="400" cy="1267.36" r="399.65" fill="none" stroke="#ff2703" stroke-miterlimit="10" stroke-width="0.7"/>
+    <line id="cGuide3" x1="301.75" y1="1267.36" x2="498.24" y2="1267.36" fill="none" stroke="#ff2703" stroke-miterlimit="10" stroke-width="0.7"/>
+    <line id="cGuide2" x1="400" y1="1169.11" x2="400" y2="1365.6" fill="none" stroke="#ff2703" stroke-miterlimit="10" stroke-width="0.7"/>
   </g>
 </svg>
