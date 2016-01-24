@@ -20,7 +20,7 @@ function changeSC(){
 }
 
 mainTL
-.to(cloudGroups, 3, {autoAlpha: 0}, 'stars')
+.to(cloudGroups, 2.5, {autoAlpha: 0}, 'stars')
 .call(changeSC) // had trouble calling this as first thing in timeline replay... hmmm...
 //.from(['#for', '#coming'], 1, {autoAlpha:0})
 .from('#stars-big', 6, {x:1000, y:-1000, ease: Power3.easeOut}, 'stars')

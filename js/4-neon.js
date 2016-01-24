@@ -146,7 +146,7 @@ var neonAppearTL = new TimelineMax({paused:true});
 
 // HIDE SIGN ELEMENTS FOR REVEAL
 
-TweenMax.set(['#glow-lines', '#neon-base', '#arrow-base', '#over-base', '#landscape', '#landscape-clouds'], {autoAlpha: 0})
+TweenMax.set(['#glow-lines', '#neon-base', '#arrow-base', '#over-base', '#landscape', '#landscape-clouds', '#purple-base'], {autoAlpha: 0})
 
 neonAppearTL
 
@@ -171,19 +171,21 @@ cloudsBG
 .to('#landscape-clouds', 10, {xPercent:-15, ease: Linear.easeNone})
 
 mainTL
+.set('#purple-base', {autoAlpha:1}, 'startDust')
 .add(function(){neonAppearTL.play()}, 'startDust+=0.5')
 
 // ShakeCAM
 
-.add('zoom', '+=7')
+.add('zoom', '+=4')
 
 .to('#landscape', 0.3, {scale:1.8, yPercent:5, ease: Back.easeInOut}, 'zoom')
-.add(function(){cameraShake.play()}, 'zoom')
+//.add(function(){cameraShake.play()}, 'zoom')
 //.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, 'zoom')
 
-.to('#landscape', 0.5, {autoAlpha:1}, 'zoom+=0.5')
-.to('#landscape-clouds', 0.4, {autoAlpha:0.3}, 'zoom+=0.5')
-.add(function(){cloudsBG.play()}, 'zoom+=0.5')
+.to('#landscape', 0.5, {autoAlpha:1}, 'zoom')
+.to('#landscape-clouds', 0.4, {autoAlpha:0.3}, 'zoom')
+.add(function(){cloudsBG.play()}, 'zoom')
+.add(function(){cameraShake.play()}, 'zoom')
 
 .to('#neon', 0.5, {scale: 1.3, rotation: -4}, 'zoom')
 .to('#landscape', 0.5, {scale: 1.3, rotation: -4, yPercent: 20, xPercent: -5}, 'zoom')
@@ -195,11 +197,12 @@ mainTL
 ;
 
 mainTL
-.add(function(){cameraShake.pause()})
-.add(function(){cloudsBG.pause()})
 .add('falloff', '+=1')
 
-.to('#neon', 2, {x: -800, /*y: 100,*/ ease: Power4.easeIn}, 'falloff')
+.add(function(){cameraShake.pause()}, 'falloff')
+.add(function(){cloudsBG.pause()}, 'falloff+=1')
+
+.to('#neon', 2, {x: -800, y: 50, rotation:-2, ease: Power4.easeIn}, 'falloff')
 .to('#landscape', 3, {xPercent: -100, yPercent: 90, ease: Power4.easeIn}, 'falloff')
 .to('#landscape-clouds', 3, {xPercent: -100, ease: Power4.easeIn}, 'falloff+=0.1')
 ;

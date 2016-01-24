@@ -114,7 +114,7 @@ var blCreate = function() {
             rotation: -10,
         })
         .to(knot, 2.2, {
-            rotation: 40,
+            rotation: 10,
             scaleY: 1.2,
             yoyo: true,
             repeat: -1,
@@ -208,6 +208,9 @@ aYou
 
 var MadeString = Made.querySelector("[id^=string]");
 
+bl_you.timeScale(1.5);
+bl_made.timeScale(1.5);
+bl_it.timeScale(1.5);
 
 aMade
 .call(function(){
@@ -237,7 +240,7 @@ aMade
 
 })
 .to(MadeString, 2, {
-    morphSVG: '#morphstring3',
+    morphSVG: '#morphstring1',
     ease: Power1.easeIn,
 }, 'out')
 .to(Made, 2, {

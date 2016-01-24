@@ -69,4 +69,4 @@ mainTL
     },
     bezier: [{ autoAlpha: 0.7 }, { autoAlpha: 0 }],
     ease: Power1.easeInOut
-}, 0, '-=0.8');
+}, 0, '-=0.2');

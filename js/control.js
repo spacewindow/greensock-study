@@ -1,2 +1,2 @@
 //mainTL.timeScale(0.5);
-mainTL.play(13);
+mainTL.play(0);
