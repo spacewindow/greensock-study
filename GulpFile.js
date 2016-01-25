@@ -9,6 +9,8 @@ var sass = require('gulp-sass');
 var plumber = require('gulp-plumber');
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync').create();
+var insert = require('gulp-insert');
+var replace = require('gulp-replace');
 
 //gulp.task('prod', ['sass-prod', 'prefix']);
 gulp.task('start', ['browsersync']);
@@ -26,6 +28,34 @@ gulp.task('browsersync', ['sass'], function() {
 //    gulp.watch("**/*.php" ).on('change', browserSync.reload);
     gulp.watch(["images/*.svg", "*.php" ]).on('change', browserSync.reload);
 });
+
+gulp.task('concat-svg', function(){
+    gulp.src([
+       'images/svg-background.svg',
+        'images/svg-clouds.svg',
+        'images/svg-balloons.svg',
+        'images/svg-clouds2.svg',
+        'images/svg-neon.svg',
+        'images/svg-dust.svg',
+        'images/svg-arm.svg',
+        'images/svg-you.svg',
+        'images/svg-thanks.svg',
+        'images/svg-grain.svg',
+        'images/svg-replay.svg'
+    ])
+
+    .pipe(plumber())
+    .pipe(concat('banner.svg'))
+    .pipe(gulp.dest('dist'))
+})
+
+gulp.task('fix-svg', function(){
+    gulp.src('dist/banner.svg')
+    .pipe(insert.append('<svg id="svg-arm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">'))
+    .pipe(insert.prepend('</svg>'))
+})
+
+gulp.task('svg', ['concat-svg', 'fix-svg' ]);
 
 // Sass compiler
 gulp.task('sass', function () {
@@ -81,6 +111,11 @@ gulp.task('uglify', function () {
 //        .pipe(gulp.dest('public/js'))
 
         //  Uglify, with settings.
+
+        .pipe(uglify({
+//            mangle: true,
+            warnings: true
+        }))
 
         //  Rename the output.
         /*.pipe(rename({

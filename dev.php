@@ -9,45 +9,9 @@
 
 
     <?php
-        include('images/svg-background.svg');
+        include('dist/banner.svg');
     ?>
 
-    <?php
-        include('images/svg-clouds.svg');
-    ?>
-
-
-    <?php
-        include('images/svg-balloons.svg');
-    ?>
-    <?php
-        include('images/svg-clouds2.svg');
-    ?>
-
-
-    <?php
-        include('images/svg-neon.svg');
-    ?>
-
-    <?php
-        include('images/svg-dust.svg');
-    ?>
-
-    <?php
-        include('images/svg-arm.svg');
-    ?>
-    <?php
-        include('images/svg-you.svg');
-    ?>
-    <?php
-        include('images/svg-thanks.svg');
-    ?>
-    <?php
-        include('images/svg-grain.svg');
-    ?>
-    <?php
-        include('images/svg-replay.svg');
-    ?>
 
 <!--CONTROLS-->
 
