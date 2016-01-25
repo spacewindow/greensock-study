@@ -1,44 +1,10 @@
 // SETUP CLOUDS
 
-// in Illlustrator create one main guide as an ellipse which fills the entire stage. Makes it easy to get the center point.
 
-function positionIt(guide, target){
 
-    var mainGuide = document.getElementById(guide),
-//        allGuides = document.querySelectorAll("[id*='" + guide + "']"),
-        thisTarget = document.getElementById(target),
-
-        // get Guide x and y offset
-        boundsG = mainGuide.getBBox(),
-        x = boundsG.x,
-        y = boundsG.y;
-
-    console.log(thisTarget);
-
-    // get guide center
-    var cx = mainGuide.getAttribute('cx'),
-        cy = mainGuide.getAttribute('cy'),
-        newOrigin = cx + ' ' + cy;
-
-    TweenMax.set(thisTarget, {
-        transformOrigin: newOrigin,
-        x:-x,
-        y:-y});
-//    TweenMax.set(allGuides, {autoAlpha:0});
-    TweenMax.set(mainGuide, {autoAlpha:0});
-}
-
-positionIt('cGuide01', 'cloudGroup01');
-positionIt('cGuide02', 'cloudGroup02');
-
-var cloudGroups = ['#cloudGroup01', '#cloudGroup02'];
-var clouds = document.querySelectorAll("[id*='cloudGroup'] path");
 var numClouds = clouds.length;
 var cloudsOn = true;
 
-TweenMax.set(clouds, {autoAlpha: 0.3});
-TweenMax.set(cloudGroups, {rotation:90});
-TweenMax.set('#speedline', {autoAlpha:0.5});
 
 // Thanks to Chris Gannon http://codepen.io/chrisgannon/pen/KVMMjR
 
@@ -80,11 +46,11 @@ function passStar() {
 
     if (cloudsOn) {
 
-        TweenMax.fromTo('#single-star', 0.4, {
+        TweenMax.fromTo('#single-star', 1, {
             x: randMinMax(-400, 400),
-            y:0
+            y:400
         }, {
-            y: 1600,
+            y: 2500,
             onComplete: passStar,
             ease: Linear.easeNone
         });

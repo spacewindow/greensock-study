@@ -19,4 +19,7 @@ svg {
 .grain {
   pointer-events: none; }
 
+#replay {
+  cursor: pointer; }
+
 /*# sourceMappingURL=banner.css.map */

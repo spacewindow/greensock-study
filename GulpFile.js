@@ -22,7 +22,7 @@ gulp.task('browsersync', ['sass'], function() {
     });
 
     gulp.watch("scss/*.scss", ['sass']);
-    gulp.watch("js/*.js").on('change', browserSync.reload);
+    gulp.watch("js/*.js", ['uglify']);
 //    gulp.watch("**/*.php" ).on('change', browserSync.reload);
     gulp.watch(["images/*.svg", "*.php" ]).on('change', browserSync.reload);
 });
@@ -55,7 +55,17 @@ gulp.task('sass', function () {
 });
 
 gulp.task('uglify', function () {
-    gulp.src(['js/vendor/*.js', 'js/main.js'])
+    gulp.src([
+        'js/_setup.js',
+        'js/1-hand.js',
+        'js/2-label.js',
+        'js/3-collapse.js',
+        'js/4-neon.js',
+        'js/5-clouds.js',
+        'js/6-balloons.js',
+        'js/7-stars.js',
+        'js/_control.js',
+    ])
 
         //  Stops crashing watch on error.
         .pipe(plumber())
@@ -64,28 +74,28 @@ gulp.task('uglify', function () {
         .pipe(srcmaps.init())
 
         //  Concat all files.
-        .pipe(concat('app.js'))
+        .pipe(concat('gsap-banner.js'))
 
 
         //  Set the destination folder for the concat file.
 //        .pipe(gulp.dest('public/js'))
 
         //  Uglify, with settings.
-        .pipe(uglify({
-            mangle: true,
-            warnings: true
-        }))
 
         //  Rename the output.
-        .pipe(rename({
+        /*.pipe(rename({
             extname: '.min.js'
-        }))
+        }))*/
 
         //  Write the sourcemaps to the current directory.
         .pipe(srcmaps.write('/'))
 
         //  Set the output destination for the final file.
-        .pipe(gulp.dest('js'));
+        .pipe(gulp.dest('dist'))
+
+        // Sync with browsersync
+        .pipe(browserSync.stream());
+    ;
 
 });
 
@@ -102,6 +112,6 @@ gulp.task('prefix', function () {
 gulp.task('watch', function () {
 
     gulp.watch('scss/*.scss', ['sass']);
-    gulp.watch(['main.js'], ['uglify']);
+    gulp.watch(['js/*.js'], ['uglify']);
 
 });

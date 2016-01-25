@@ -1,6 +1,6 @@
 // SETUP
 
-TweenMax.set('#svg-neon', {transformOrigin: '0 0', scale:3});
+
 
 // CAMERA SHAKE
 
@@ -131,14 +131,10 @@ neonScaleTL.pause(0);
 
 // NEON SCALE TL
 
-TweenMax.set('#neon', {transformOrigin: 'center center', scale: 0.4});
 
-TweenMax.set('#landscape',  {transformOrigin: '400 200', smoothOrigin:true, scale: 0.4});
-
-TweenMax.set('#landscape-clouds',  {transformOrigin: '400 200'});
 
 neonScaleTL
-.to('#neon', 8, {scale:0.6});
+.to('#neon', 4, {scale:0.6});
 
 //  NEON APPEARANCE SEQUENCE
 
@@ -146,7 +142,7 @@ var neonAppearTL = new TimelineMax({paused:true});
 
 // HIDE SIGN ELEMENTS FOR REVEAL
 
-TweenMax.set(['#glow-lines', '#neon-base', '#arrow-base', '#over-base', '#landscape', '#landscape-clouds', '#purple-base'], {autoAlpha: 0})
+
 
 neonAppearTL
 
@@ -160,7 +156,6 @@ neonAppearTL
 .to('#arrow-base', 0.2, {autoAlpha: 1}, '+=1')
 .to(['#neon-base', '#over-base'], 0.2, {autoAlpha: 1}, '+=0.5')
 .staggerTo(['#land', '#mountains'], 0.8, {autoAlpha:1}, 0.2)
-.to('#clouds1', 0.5, {autoAlpha:0.3});
 ;
 
 // SET CLOUDS
@@ -168,7 +163,7 @@ neonAppearTL
 var cloudsBG = new TimelineMax({paused:true});
 
 cloudsBG
-.to('#landscape-clouds', 10, {xPercent:-15, ease: Linear.easeNone})
+.to('#landscape-clouds', 10, {xPercent:-15, ease: Power2.easeIn})
 
 mainTL
 .set('#purple-base', {autoAlpha:1}, 'startDust')
@@ -179,7 +174,6 @@ mainTL
 .add('zoom', '+=4')
 
 .to('#landscape', 0.3, {scale:1.8, yPercent:5, ease: Back.easeInOut}, 'zoom')
-//.add(function(){cameraShake.play()}, 'zoom')
 //.to('#neon', 0.8, {scale:1, ease: Back.easeInOut}, 'zoom')
 
 .to('#landscape', 0.5, {autoAlpha:1}, 'zoom')
@@ -200,9 +194,9 @@ mainTL
 .add('falloff', '+=1')
 
 .add(function(){cameraShake.pause()}, 'falloff')
-.add(function(){cloudsBG.pause()}, 'falloff+=1')
+//.add(function(){cloudsBG.pause()}, 'falloff+=1')
 
 .to('#neon', 2, {x: -800, y: 50, rotation:-2, ease: Power4.easeIn}, 'falloff')
-.to('#landscape', 3, {xPercent: -100, yPercent: 90, ease: Power4.easeIn}, 'falloff')
+.to('#landscape', 3, {xPercent: -100, yPercent: 90, ease: Power2.easeIn}, 'falloff')
 .to('#landscape-clouds', 3, {xPercent: -100, ease: Power4.easeIn}, 'falloff+=0.1')
 ;

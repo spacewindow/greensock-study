@@ -1,15 +1,6 @@
 // BALLOONS ANIMATION (PAUSED)
 
-var
-    blwrap = selectAll('[id*=bl-]'),
-    bl = selectAll('[id^=balloon]'),
-    string = selectAll('[id^=string]'),
-    You = select('#bl_you'),
-    Made = select('#bl_made'),
-    It = select('#bl_it'),
-    cloud = selectAll('.cloud'),
-    cloudGroup = selectAll('.cloudGroup')
-    ;
+
 
 
 //TweenLite.ticker.fps(24);
@@ -17,7 +8,7 @@ var
 var aString = new TimelineMax({repeat: -1});
 var aKnot = new TimelineMax({repeat: -1});
 
-TweenMax.set('#morphstrings', {autoAlpha:0});
+
 
 
 //TweenMax.to(svg, 2, {attr:{viewBox: '0 0 400 400'}, repeat: -1, yoyo: true, ease:Linear.easeNone});
@@ -158,16 +149,6 @@ var YouString = You.querySelector("[id^=string]");
 
 aYou
 //.call(toggleClouds)
-.set([You, Made], {
-    y: 800,
-    x: -100,
-    rotation: 10
-})
-.set(It, {
-    y: 800,
-    x: 100,
-    rotation: 10
-})
 .call(function(){
     bl_you.play(0)
 })

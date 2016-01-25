@@ -1,12 +1,4 @@
-TweenMax.set(['#heybox', '#squareleft', '#squareright', '#hey'], {
-        transformOrigin: 'center bottom',
-});
-TweenMax.set('#sign', {
-        transformOrigin: '70% 150%',
-});
-TweenMax.set(['#squareleft', '#squareright'], {
-    autoAlpha: 1
-});
+
 
 
 mainTL
@@ -61,7 +53,7 @@ autoAlpha: 0
 
 mainTL
 .add('startDust')
-.staggerTo(dustClouds, 4, {
+.staggerTo(dustClouds, 3, {
     cycle: {
       x: function() { return randMinMax(-400, 400); },
       y: function() { return randMinMax(-300, -400); },
@@ -69,4 +61,4 @@ mainTL
     },
     bezier: [{ autoAlpha: 0.7 }, { autoAlpha: 0 }],
     ease: Power1.easeInOut
-}, 0, '-=0.2');
+}, 0, '-=0.4');
